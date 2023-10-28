@@ -19,7 +19,6 @@
 			<li>
 				* Generate multiple smaller images to make sure devices download the optimal-sized one.
 			</li>
-			<li>* Automatically compress and optimize your image with the powerful Filestack API.</li>
 			<li>* Efficiently lazy load images to speed initial page load and save bandwidth.</li>
 			<li>
 				* Use the "blur-up" technique or solid background color to show a preview of the image while
