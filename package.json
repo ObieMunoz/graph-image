@@ -1,6 +1,6 @@
 {
 	"name": "graph-image",
-	"version": "0.1.2",
+	"version": "0.1.1",
 	"author": "Obie Munoz obiemunozjr@gmail.com",
 	"license": "MIT",
 	"keywords": [
@@ -61,5 +61,8 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@changesets/cli": "^2.26.2"
+	}
 }
