@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { createLoadObserver } from './_utils';
+	import { createLoadObserver } from './_utils.js';
 
 	const dispatch = createEventDispatcher();
 	export let src: string;

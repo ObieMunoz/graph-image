@@ -9,8 +9,8 @@
 		listenToIntersections,
 		resizeImage,
 		srcSet
-	} from './_utils';
-	import type { ImageProps } from './types';
+	} from './_utils.js';
+	import type { ImageProps } from './types.ts';
 
 	export let title: string = '';
 	export let alt: string = '';

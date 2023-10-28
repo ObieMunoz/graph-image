@@ -5,7 +5,7 @@ import type {
 	ResizeParams,
 	ResizeFunction,
 	TransformFunction
-} from './types';
+} from './types.ts';
 
 const imageCache = writable<ImageCacheType>({});
 let io: IntersectionObserver | undefined;
@@ -122,7 +122,6 @@ export function srcSet(
 		})
 		.join(',\n');
 }
-
 
 export function imgSizes(maxWidth: number): string {
 	return `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`;
