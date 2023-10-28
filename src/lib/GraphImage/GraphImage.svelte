@@ -12,34 +12,33 @@
 	} from './_utils.js';
 	import type { ImageProps } from './types.ts';
 
+	export let image: ImageProps;
+	export let maxWidth: number = 800;
+	export let fadeIn: boolean = true;
+	export let fit: 'clip' | 'crop' | 'scale' | 'max' = 'crop';
+	export let withWebp: boolean = true;
+	export let transforms: string[] = [];
 	export let title: string = '';
 	export let alt: string = '';
 	export let style: Record<string, any> = {};
-	export let fit: 'clip' | 'crop' | 'scale' | 'max' = 'crop';
-	export let maxWidth: number = 800;
-	export let withWebp: boolean = true;
-	export let transforms: string[] = [];
 	export let blurryPlaceholder: boolean = true;
 	export let backgroundColor: string | boolean = '';
-	export let fadeIn: boolean = true;
 	export let baseURI: string = 'https://media.graphassets.com';
-	export let image: ImageProps;
 
-	let imgLoaded = false;
-	let isVisible = false;
-	let thumbSrc = '';
-	let finalSrc = '';
-	let srcSetImgs = '';
-	let sizes = '';
-	let divRef: HTMLElement | null = null;
-	let IOSupported = typeof IntersectionObserver !== 'undefined';
-
+	const seenBefore = inImageCache(image, false);
 	// convert style Record<string, any> = {} to a style string
 	const styleString = Object.entries(style)
 		.map(([key, value]) => `${key}: ${value};`)
 		.join('');
 
-	const seenBefore = inImageCache(image, false);
+	let divRef: HTMLElement | null = null;
+	let finalSrc = '';
+	let imgLoaded = false;
+	let IOSupported = typeof IntersectionObserver !== 'undefined';
+	let isVisible = false;
+	let thumbSrc = '';
+	let srcSetImgs = '';
+	let sizes = '';
 
 	if (!seenBefore && IOSupported) {
 		isVisible = false;

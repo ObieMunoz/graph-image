@@ -3,6 +3,7 @@
 	import images from './data';
 </script>
 
+<h1>Svelte Image</h1>
 <div>
 	{#each images as image}
 		<GraphImage
@@ -23,5 +24,7 @@
 	div {
 		display: flex;
 		flex-wrap: wrap;
+		max-width: 1064px;
+		margin: 0 auto;
 	}
 </style>
