@@ -1,5 +1,13 @@
 # graph-image
 
+## 0.1.2
+
+### Patch Changes
+
+- 801715c: Added GH Actions/workflow for npm publishing
+- 390389c: Minor updates
+- 801715c: Fixed minor rendering issue with image widths
+
 ## 0.1.1
 
 ### Patch Changes
