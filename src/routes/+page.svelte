@@ -1,6 +1,6 @@
 <script>
 	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
-	import images from './data';
+	import images from './data.js';
 </script>
 
 <main>

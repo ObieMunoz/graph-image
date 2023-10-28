@@ -1,8 +1,16 @@
 {
 	"name": "graph-image",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"author": "Obie Munoz obiemunozjr@gmail.com",
 	"license": "MIT",
+	"keywords": [
+		"hygraph",
+		"graphcms",
+		"image",
+		"svelte",
+		"sveltekit",
+		"svelte-kit"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",

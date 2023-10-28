@@ -23,7 +23,7 @@ Here's an example using a static asset object.
 
 ```html
 <script>
-    import GraphImage from "graph-image";
+    import { GraphImage } from "graph-image";
 
     const asset = {
         handle: "uQrLj1QRWKJnlQv1sEmC",

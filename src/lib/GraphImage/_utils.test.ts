@@ -8,7 +8,7 @@ import {
 	responsiveSizes,
 	getWidths,
 	imgSizes
-} from './_utils';
+} from './_utils.js';
 import { describe, it, expect } from 'vitest';
 
 type MockListeners = {

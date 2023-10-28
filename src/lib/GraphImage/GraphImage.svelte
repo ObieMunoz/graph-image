@@ -34,7 +34,7 @@
 	let divRef: HTMLElement | null = null;
 	let finalSrc = '';
 	let imgLoaded = false;
-	let IOSupported = typeof IntersectionObserver !== 'undefined';
+	let IOSupported = typeof window !== 'undefined' && typeof IntersectionObserver !== 'undefined';
 	let isVisible = false;
 	let thumbSrc = '';
 	let srcSetImgs = '';

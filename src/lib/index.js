@@ -1,1 +1,3 @@
-export { default as GraphImage } from './GraphImage/GraphImage.svelte';
+import GraphImage from './GraphImage/GraphImage.svelte';
+
+export { GraphImage }
