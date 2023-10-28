@@ -1,6 +1,7 @@
 {
 	"name": "svelte-image",
 	"version": "0.0.1",
+	"author": "Obie Munoz obiemunozjr@gmail.com",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
