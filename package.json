@@ -11,6 +11,9 @@
 		"sveltekit",
 		"svelte-kit"
 	],
+	"repository": {
+		"url": "https://github.com/ObieMunoz/graph-image"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -58,5 +61,8 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@changesets/cli": "^2.26.2"
+	}
 }
