@@ -1,6 +1,6 @@
 {
 	"name": "graph-image",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "Obie Munoz obiemunozjr@gmail.com",
 	"license": "MIT",
 	"keywords": [
@@ -11,6 +11,9 @@
 		"sveltekit",
 		"svelte-kit"
 	],
+	"repository": {
+		"url": "https://github.com/ObieMunoz/graph-image"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
