@@ -109,19 +109,20 @@ export function getWidths(width: number, maxWidth: number): number[] {
 }
 
 export function srcSet(
-	srcBase: (resizeOptions: string[], transforms: string[]) => string,
+	srcBase: (resize: string) => (transforms: string[]) => string,
 	srcWidths: number[],
 	fit: string,
 	transforms: string[]
 ): string {
 	return srcWidths
 		.map((width) => {
-			const resizeOption = 'resize=w:' + Math.floor(width) + ',fit:' + fit;
-			const src = srcBase([resizeOption], transforms);
-			return src + ' ' + Math.floor(width) + 'w';
+			const resizeOption = `resize=w:${Math.floor(width)},fit:${fit}`;
+			const src = srcBase(resizeOption)(transforms);
+			return `${src} ${Math.floor(width)}w`;
 		})
 		.join(',\n');
 }
+
 
 export function imgSizes(maxWidth: number): string {
 	return `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`;

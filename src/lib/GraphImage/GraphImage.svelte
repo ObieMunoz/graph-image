@@ -75,8 +75,7 @@
 		thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
 
 		// Construct srcSet if maxWidth provided
-		const resizeOptions = `resize=w:${image.width},fit:${fit}`;
-		srcSetImgs = srcSet(srcBase(resizeOptions), getWidths(image.width, maxWidth), fit, transforms);
+		srcSetImgs = srcSet(srcBase, getWidths(image.width, maxWidth), fit, transforms);
 		sizes = imgSizes(maxWidth);
 	}
 </script>
