@@ -1,5 +1,5 @@
 <script>
-	import GraphImage from '$lib/Image/GraphImage.svelte';
+	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
 	import images from './baseImgs';
 </script>
 
