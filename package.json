@@ -1,7 +1,8 @@
 {
-	"name": "svelte-image",
-	"version": "0.0.1",
+	"name": "graph-image",
+	"version": "0.1.0",
 	"author": "Obie Munoz obiemunozjr@gmail.com",
+	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",

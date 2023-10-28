@@ -5,12 +5,12 @@
 
 <main>
 	<div>
-		<h1>svelte-image</h1>
+		<h1>graph-image</h1>
 
 		<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
 
 		<p>
-			<a href="https://svelte-image.obiemunoz.com">Demo</a> •
+			<a href="https://graph-image.obiemunoz.com">Demo</a> •
 			<a href="https://www.obiemunoz.com">Obie Munoz</a>
 		</p>
 

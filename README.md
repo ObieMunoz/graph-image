@@ -1,9 +1,9 @@
-<h1 align="center">svelte-image</h1>
+<h1 align="center">graph-image</h1>
 
 <p align="center">Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
 
 <p align="center">
-  <a href="https://svelte-image.obiemunoz.com">Demo</a> • <a href="https://www.obiemunoz.com">Obie Munoz</a>
+  <a href="https://graph-image.obiemunoz.com">Demo</a> • <a href="https://www.obiemunoz.com">Obie Munoz</a>
 </p>
 
 * Resize large images to the size needed by your design.
@@ -23,7 +23,7 @@ Here's an example using a static asset object.
 
 ```html
 <script>
-    import GraphImage from "svelte-image";
+    import GraphImage from "graph-image";
 
     const asset = {
         handle: "uQrLj1QRWKJnlQv1sEmC",
