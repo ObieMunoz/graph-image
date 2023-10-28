@@ -8,7 +8,6 @@
 
 * Resize large images to the size needed by your design.
 * Generate multiple smaller images to make sure devices download the optimal-sized one.
-* Automatically compress and optimize your image with the powerful Filestack API.
 * Efficiently lazy load images to speed initial page load and save bandwidth.
 * Use the "blur-up" technique or solid background color to show a preview of the image while it loads.
 * Hold the image position so your page doesn't jump while images load.
