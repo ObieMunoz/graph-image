@@ -1,81 +1,144 @@
 <script>
 	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
-	import images from './data.js';
+	import { assets, features } from './data.js';
 </script>
 
-<main>
-	<div>
-		<h1>graph-image</h1>
-
-		<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
-
-		<p>
-			<a href="https://graph-image.obiemunoz.com">Demo</a> •
-			<a href="https://www.obiemunoz.com">Obie Munoz</a>
-		</p>
-
-		<ul>
-			<li>* Resize large images to the size needed by your design.</li>
-			<li>
-				* Generate multiple smaller images to make sure devices download the optimal-sized one.
-			</li>
-			<li>* Efficiently lazy load images to speed initial page load and save bandwidth.</li>
-			<li>
-				* Use the "blur-up" technique or solid background color to show a preview of the image while
-				it loads.
-			</li>
-			<li>* Hold the image position so your page doesn't jump while images load.</li>
-		</ul>
-
-		<p>
-			<strong>Credits & Contribution:</strong> This Svelte project is a port of the original
-			<a href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a> for React by
-			Hygraph. All thanks to the creators and contributors of the original project for their remarkable
-			work.
-		</p>
-	</div>
+<header>
+	<h1>graph-image</h1>
+	<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
+	<nav>
+		<a href="https://www.obiemunoz.com" target="_blank">Obie Munoz</a>
+		<a href="https://www.github.com/obiemunoz/graph-image/" target="_blank">
+			This Project on GitHub
+		</a>
+	</nav>
 	<section>
-		{#each images as image}
+		{#each features as feature}
+			<p><span>✓</span> {feature}</p>
+		{/each}
+	</section>
+	<aside>
+		This Svelte project is a port of the original
+		<a href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a> for React by
+		Hygraph. All thanks to the creators and contributors of the original project for their remarkable
+		work.
+	</aside>
+</header>
+
+<div class="gallery">
+	{#each assets as image}
+		<div>
 			<GraphImage
 				title="Sample"
 				alt="Sample"
 				image={{ handle: image.handle, width: 1920, height: 1080 }}
 				withWebp
 				maxWidth={500}
-				style={{
-					margin: '32px 16px'
-				}}
 			/>
-		{/each}
-	</section>
-</main>
+		</div>
+	{/each}
+</div>
 
 <style>
-	* {
-		font-size: x-large;
+	header {
+		background-color: #242424;
+		padding: 2rem 3rem;
+		border-radius: 10px;
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 	}
 
-	ul {
-		list-style-type: none;
-		text-align: start;
+	header h1 {
+		font-size: 3rem;
+		color: #fff;
+		margin-bottom: 1.5rem;
 	}
 
-	section {
-		margin: 0 auto;
+	header p {
+		font-size: 1.2rem;
+		margin-bottom: 2rem;
+		color: #cfcfcf;
+	}
+
+	nav {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 2rem;
+	}
+
+	nav a {
+		background-color: #4e4feb;
+		color: #fff;
+		padding: 0.5rem 1.5rem;
+		border: none;
+		border-radius: 8px;
+		font-weight: bold;
+		text-decoration: none;
+		transition: background-color 0.2s ease;
+	}
+
+	nav a:hover {
+		background-color: #068fff;
+		color: #fff;
+	}
+
+	section p {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	section span {
+		color: #068fff;
+		font-weight: bold;
+	}
+
+	a {
+		color: #068fff;
+	}
+
+	a:hover {
+		color: #4e4feb;
+	}
+
+	aside {
+		font-size: 0.9rem;
+		margin-top: 2rem;
+		border-top: 1px solid #333;
+		padding-top: 1rem;
+		color: #a9a9a9;
+	}
+
+	.gallery {
 		display: grid;
-		max-width: 1600px;
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr; /* Default: 1 image per row */
+		justify-content: center;
+		gap: 1rem;
+		max-width: 1200px;
+		padding: 1rem;
+		margin: 0 auto;
 	}
 
-	@media (min-width: 800px) {
-		section {
-			grid-template-columns: 1fr 1fr;
+	.gallery > div:hover {
+		transform: scale(1.05);
+		transition-duration: 0.5s;
+		z-index: 3;
+	}
+
+	.gallery > div {
+		border: 1px solid #333;
+		border-radius: 10px;
+		overflow: hidden;
+	}
+
+	@media (min-width: 600px) {
+		.gallery {
+			grid-template-columns: repeat(2, 1fr); /* 2 images per row */
 		}
 	}
 
-	@media (min-width: 1200px) {
-		section {
-			grid-template-columns: 1fr 1fr 1fr;
+	@media (min-width: 900px) {
+		.gallery {
+			grid-template-columns: repeat(3, 1fr); /* 3 images per row */
 		}
 	}
 </style>

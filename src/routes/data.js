@@ -1,4 +1,6 @@
-export default [
+export const features = ['Resize large images to the size needed by your design.', 'Generate multiple smaller images to make sure devices download the optimal-sized one.', 'Efficiently lazy load images to speed initial page load and save bandwidth.', "Use the 'blur-up' technique or solid background color to show a preview of the image while it loads.", "Hold the image position so your page doesn't jump while images load."]
+
+export const assets = [
 	{
 		height: 1280,
 		width: 1920,
