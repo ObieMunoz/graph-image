@@ -14,8 +14,6 @@
 
 	export let title: string = '';
 	export let alt: string = '';
-	export let className: string | object = '';
-	export let outerWrapperClassName: string | object = '';
 	export let style: Record<string, any> = {};
 	export let fit: 'clip' | 'crop' | 'scale' | 'max' = 'crop';
 	export let maxWidth: number = 800;
@@ -66,34 +64,30 @@
 		const srcBase = constructURL(image.handle, withWebp, baseURI);
 		const thumbBase = constructURL(image.handle, false, baseURI);
 
-		// Construct the final image url
+		// Final Image URL
 		const sizedSrc = srcBase(resizeImage({ width: image.width, height: image.height, fit }));
 		finalSrc = sizedSrc(transforms);
 
-		// Construct blurry placeholder url
+		// Blurry Placeholder URL
 		const thumbSize = { width: 20, height: 20, fit: 'crop' };
 		thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
 
-		// Construct srcSet if maxWidth provided
+		// srcSet if maxWidth is provided
 		srcSetImgs = srcSet(srcBase, getWidths(image.width, maxWidth), fit, transforms);
 		sizes = imgSizes(maxWidth);
 	}
 </script>
 
 <div
-	class="{outerWrapperClassName} graphcms-image-outer-wrapper"
-	style="z-index: 0; position: {style.position === 'absolute' ? 'initial' : 'relative'}"
+	class="outer"
+	class:initial={style.position === 'absolute'}
+	class:relative={style.position !== 'absolute'}
 >
-	<div
-		class="{className} graphcms-image-wrapper"
-		style="position: relative; overflow: hidden; z-index: 1; {styleString}"
-		bind:this={divRef}
-	>
+	<div class="inner" style={styleString} bind:this={divRef}>
 		<!-- Preserve the aspect ratio. -->
-		<div style="width: 100%; padding-bottom: {100 / (image.width / image.height)}%" />
+		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%" />
 
 		{#if blurryPlaceholder}
-			<!-- Show the blurry thumbnail image. -->
 			<Image
 				{alt}
 				{title}
@@ -103,19 +97,14 @@
 		{/if}
 
 		{#if backgroundColor}
-			<!-- Show a solid background color. -->
 			<div
 				{title}
-				style="background-color: {bgColor(
-					backgroundColor
-				)}; position: absolute; top: 0; bottom: 0; opacity: {imgLoaded
-					? 0
-					: 1}; transition-delay: 0.25s; right: 0; left: 0"
+				class="bg-container"
+				style="background-color: {bgColor(backgroundColor)}; opacity: {imgLoaded ? 0 : 1};"
 			/>
 		{/if}
 
 		{#if isVisible}
-			<!-- Once the image is visible, start downloading the image -->
 			<Image
 				{alt}
 				{title}
@@ -128,3 +117,36 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	.outer {
+		z-index: 0;
+	}
+
+	.initial {
+		position: initial;
+	}
+
+	.relative {
+		position: relative;
+	}
+
+	.inner {
+		position: relative;
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	.full {
+		width: 100%;
+	}
+
+	.bg-container {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		transition-delay: '0.25s';
+		right: 0;
+		left: 0;
+	}
+</style>
