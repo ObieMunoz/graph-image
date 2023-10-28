@@ -10,6 +10,7 @@
 		alt="Sample"
 		image={{ handle: sampleImage.handle, width: 1920, height: 1080 }}
 		withWebp
+		maxWidth={500}
 		style={{
 			width: '500px',
 			margin: '32px 16px'
