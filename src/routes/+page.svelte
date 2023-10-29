@@ -1,6 +1,10 @@
-<script>
+<script lang="ts">
 	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
-	import { highDefinitionAssets, features, logo } from './data.js';
+	import type { PageData } from './$types.js';
+	import { features, logo } from './data.js';
+
+	export let data: PageData;
+	const galleryImages = data.data.galleryImages;
 </script>
 
 <header>
@@ -24,7 +28,7 @@
 </header>
 
 <div class="gallery">
-	{#each highDefinitionAssets as image}
+	{#each galleryImages as image}
 		<div>
 			<GraphImage title="Sample" alt="Sample" {image} withWebp maxWidth={1200} />
 		</div>
