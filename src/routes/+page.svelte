@@ -62,7 +62,7 @@
 		right: 0;
 		height: 0;
 		width: 0;
-		overflow: none;
+		overflow: hidden;
 	}
 
 	header p {
