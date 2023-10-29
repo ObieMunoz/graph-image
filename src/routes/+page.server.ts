@@ -9,7 +9,7 @@ export const load: PageServerLoad = async () => {
 
 	const graphql = JSON.stringify({
 		query:
-			'query PageTextContentQuery {\n  values: pageTextContent(\n    where: {id: "clob2q6ws5fze0bk8z6g7mt22"}\n    stage: PUBLISHED\n  ) {\n    features\n    headline\n  }\n  graphImages(where: {id: "clob1jc0y5fs70blfzvdbxv0z"}) {\n    id\n    images {\n      handle\n      height\n      width\n    }\n  }\n  logo(where: {id: "clob3dnas5h2v0bl91wi2vc9q"}) {\n    logo {\n      handle\n      height\n      width\n    }\n  }\n}\n'
+			'query PageTextContentQuery {\n  values: pageTextContent(\n    where: {id: "clob2q6ws5fze0bk8z6g7mt22"}\n    stage: PUBLISHED\n  ) {\n    features\n    headline\n  }\n  graphImages(where: {id: "clob1jc0y5fs70blfzvdbxv0z"}) {\n    id\n    images(first: 100) {\n      handle\n      height\n      width\n    }\n  }\n  logo(where: {id: "clob3dnas5h2v0bl91wi2vc9q"}) {\n    logo {\n      handle\n      height\n      width\n    }\n  }\n}\n'
 	});
 
 	const requestOptions = {
