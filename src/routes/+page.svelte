@@ -54,7 +54,13 @@
 <div class="gallery">
 	{#each galleryImages as image}
 		<div>
-			<GraphImage title="Sample" alt="Sample" {image} withWebp maxWidth={1200} />
+			<GraphImage
+				title="Sample"
+				alt="Sample"
+				image={{ ...image, width: 3840, height: 2160 }}
+				withWebp
+				maxWidth={1200}
+			/>
 		</div>
 	{/each}
 </div>
