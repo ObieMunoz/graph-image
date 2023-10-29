@@ -49,7 +49,7 @@
 
 	header {
 		background-color: #242424;
-		padding: 2rem 3rem;
+		padding: 1.5rem 2rem;
 		border-radius: 10px;
 		box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 	}
@@ -67,6 +67,7 @@
 		font-size: 1.2rem;
 		margin-bottom: 2rem;
 		color: #cfcfcf;
+		text-align: center;
 	}
 
 	header li {
@@ -169,7 +170,7 @@
 		}
 
 		.header-image {
-			height: 250px;
+			height: 175px;
 		}
 	}
 
@@ -179,7 +180,7 @@
 		}
 
 		.header-image {
-			height: 350px;
+			height: 275px;
 		}
 	}
 </style>
