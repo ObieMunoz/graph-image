@@ -1,10 +1,10 @@
 <script>
 	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
-	import { assets, features } from './data.js';
+	import { assets, features, logo } from './data.js';
 </script>
 
 <header>
-	<div class="header-image" />
+	<GraphImage image={logo} />
 	<h1 class="hidden">graph-image</h1>
 	<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
 	<ul>
