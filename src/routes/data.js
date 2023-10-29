@@ -6,6 +6,12 @@ export const features = [
 	"Prevent page layout jumps with consistent image positioning"
 ];
 
+export const logo = {
+	height: 510,
+	width: 1603,
+	handle: 'fONBVATVKYm2eBRtzA76'
+}
+
 export const assets = [
 	{
 		height: 1280,
