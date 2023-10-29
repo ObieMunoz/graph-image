@@ -4,19 +4,20 @@
 </script>
 
 <header>
+	<!-- svelte-ignore a11y-img-redundant-alt -->
+	<!-- <img src="/graph-image.png" alt="graph-image" /> -->
+	<div class="header-image" />
 	<h1>graph-image</h1>
 	<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
+	<ul>
+		{#each features as feature}
+			<li><span>✓</span> {feature}</li>
+		{/each}
+	</ul>
 	<nav>
 		<a href="https://www.obiemunoz.com" target="_blank">Obie Munoz</a>
-		<a href="https://www.github.com/obiemunoz/graph-image/" target="_blank">
-			This Project on GitHub
-		</a>
+		<a href="https://www.github.com/obiemunoz/graph-image/" target="_blank"> GitHub </a>
 	</nav>
-	<section>
-		{#each features as feature}
-			<p><span>✓</span> {feature}</p>
-		{/each}
-	</section>
 	<aside>
 		This Svelte project is a port of the original
 		<a href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a> for React by
@@ -40,6 +41,14 @@
 </div>
 
 <style>
+	.header-image {
+		background-image: url('/graph-image.png');
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center center;
+		height: 150px;
+	}
+
 	header {
 		background-color: #242424;
 		padding: 2rem 3rem;
@@ -48,9 +57,11 @@
 	}
 
 	header h1 {
-		font-size: 3rem;
-		color: #fff;
-		margin-bottom: 1.5rem;
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 0;
+		width: 0;
 	}
 
 	header p {
@@ -59,21 +70,30 @@
 		color: #cfcfcf;
 	}
 
+	header li {
+		font-size: 1.2rem;
+		color: #cfcfcf;
+		margin-bottom: 0.75rem;
+	}
+
 	nav {
 		display: flex;
-		gap: 1rem;
+		flex-direction: column; /* stack them vertically */
+		gap: 0.5rem;
 		margin-bottom: 2rem;
 	}
 
 	nav a {
 		background-color: #4e4feb;
 		color: #fff;
-		padding: 0.5rem 1.5rem;
+		padding: 0.4rem 0.8rem; /* reduced padding */
 		border: none;
 		border-radius: 8px;
 		font-weight: bold;
+		text-align: center;
 		text-decoration: none;
 		transition: background-color 0.2s ease;
+		font-size: 0.9rem; /* smaller font size for mobile */
 	}
 
 	nav a:hover {
@@ -81,13 +101,20 @@
 		color: #fff;
 	}
 
-	section p {
+	ul {
+		list-style: none;
+		margin-block: 0;
+		margin-inline: 0;
+		padding-inline-start: 0;
+	}
+
+	ul li {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
 	}
 
-	section span {
+	ul span {
 		color: #068fff;
 		font-weight: bold;
 	}
@@ -134,11 +161,26 @@
 		.gallery {
 			grid-template-columns: repeat(2, 1fr); /* 2 images per row */
 		}
+
+		nav {
+			flex-direction: row;
+		}
+		nav a {
+			font-size: 1rem; /* reset the font size for larger screens */
+		}
+
+		.header-image {
+			height: 250px;
+		}
 	}
 
 	@media (min-width: 900px) {
 		.gallery {
 			grid-template-columns: repeat(3, 1fr); /* 3 images per row */
+		}
+
+		.header-image {
+			height: 350px;
 		}
 	}
 </style>
