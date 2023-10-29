@@ -30,8 +30,10 @@
 </svelte:head>
 
 <header>
-	<GraphImage image={logo} />
 	<h1 class="hidden">graph-image</h1>
+	<div class="banner">
+		<GraphImage image={logo} />
+	</div>
 	<p>{headline}</p>
 	<ul>
 		{#each features as feature}
@@ -147,6 +149,10 @@
 		color: #a9a9a9;
 	}
 
+	.banner {
+		max-height: 360px;
+	}
+
 	.gallery {
 		display: grid;
 		grid-template-columns: 1fr; /* Default: 1 image per row */
@@ -178,12 +184,6 @@
 		}
 		nav a {
 			font-size: 1rem; /* reset the font size for larger screens */
-		}
-	}
-
-	@media (min-width: 900px) {
-		.gallery {
-			/* grid-template-columns: repeat(3, 1fr); 3 images per row */
 		}
 	}
 </style>
