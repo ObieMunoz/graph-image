@@ -1,9 +1,9 @@
 export const features = [
-	'Resize large images to the size needed by your design.',
-	'Generate multiple smaller images to make sure devices download the optimal-sized one.',
-	'Efficiently lazy load images to speed initial page load and save bandwidth.',
-	"Use the 'blur-up' technique or solid background color to show a preview of the image while it loads.",
-	"Hold the image position so your page doesn't jump while images load."
+	'Automatically resize images according to your design specifications',
+	'Generate device-specific variants to ensure optimal download size',
+	'Prioritize initial page speed and conserve bandwidth',
+	"Employ the 'blur-up' technique or a solid background for seamless image loading experiences",
+	"Prevent page layout jumps with consistent image positioning"
 ];
 
 export const assets = [
