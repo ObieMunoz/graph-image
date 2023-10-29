@@ -1,6 +1,6 @@
 <script>
 	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
-	import { assets, features, logo } from './data.js';
+	import { highDefinitionAssets, features, logo } from './data.js';
 </script>
 
 <header>
@@ -24,15 +24,9 @@
 </header>
 
 <div class="gallery">
-	{#each assets as image}
+	{#each highDefinitionAssets as image}
 		<div>
-			<GraphImage
-				title="Sample"
-				alt="Sample"
-				image={{ handle: image.handle, width: 1920, height: 1080 }}
-				withWebp
-				maxWidth={500}
-			/>
+			<GraphImage title="Sample" alt="Sample" {image} withWebp maxWidth={1200} />
 		</div>
 	{/each}
 </div>
@@ -163,7 +157,7 @@
 
 	@media (min-width: 900px) {
 		.gallery {
-			grid-template-columns: repeat(3, 1fr); /* 3 images per row */
+			/* grid-template-columns: repeat(3, 1fr); 3 images per row */
 		}
 	}
 </style>
