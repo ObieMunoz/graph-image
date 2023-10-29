@@ -7,7 +7,7 @@
 	<!-- svelte-ignore a11y-img-redundant-alt -->
 	<!-- <img src="/graph-image.png" alt="graph-image" /> -->
 	<div class="header-image" />
-	<h1>graph-image</h1>
+	<h1 class="hidden">graph-image</h1>
 	<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
 	<ul>
 		{#each features as feature}
@@ -56,7 +56,7 @@
 		box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 	}
 
-	header h1 {
+	.hidden {
 		position: absolute;
 		top: 0;
 		right: 0;
