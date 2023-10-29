@@ -8,7 +8,26 @@
 	const headline = data.headline;
 	const features = data.features;
 	const galleryImages = data.galleryImages;
+
+	const SEO = {
+		title: 'Graph Image',
+		description:
+			"Graph Image is a Svelte component offering advanced lazy-loading, modern compression with .webp support, device-specific image variants, optimized initial page speed, 'blur-up' technique for seamless image loading, and consistent image positioning to prevent layout jumps."
+	};
 </script>
+
+<svelte:head>
+	<title>Graph Image</title>
+	<meta property="og:title" content={SEO.title} />
+	<meta name="description" content={SEO.description} />
+	<meta property="og:description" content={SEO.description} />
+	<meta property="og:type" content="website" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={SEO.title} />
+	<meta name="twitter:description" content={SEO.description} />
+	<!-- <meta property="og:image" content="URL_TO_YOUR_IMAGE"> -->
+	<!-- <meta name="twitter:image" content="URL_TO_YOUR_IMAGE"> -->
+</svelte:head>
 
 <header>
 	<GraphImage image={logo} />
