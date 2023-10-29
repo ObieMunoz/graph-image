@@ -38,7 +38,7 @@ export const load: PageServerLoad = async () => {
 		body: graphql
 	};
 
-	let galleryImages = [];
+	let galleryImages: ImageProps[] = [];
 	let headline = 'Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph';
 	let features = [
 		'Automatically resize images according to your design specifications',

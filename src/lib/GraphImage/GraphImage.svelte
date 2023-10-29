@@ -3,6 +3,7 @@
 	import {
 		bgColor,
 		constructURL,
+		createWatermarkTransformation,
 		getWidths,
 		imgSizes,
 		inImageCache,
@@ -10,22 +11,26 @@
 		resizeImage,
 		srcSet
 	} from './_utils.js';
-	import type { ImageProps } from './types.ts';
+	import type { ImageProps, Watermark } from './types.ts';
 
 	export let image: ImageProps;
 	export let maxWidth: number = 800;
 	export let fadeIn: boolean = true;
 	export let fit: 'clip' | 'crop' | 'scale' | 'max' = 'crop';
 	export let withWebp: boolean = true;
-	export let transforms: string[] = [];
 	export let title: string = '';
 	export let alt: string = '';
 	export let style: Record<string, any> = {};
 	export let blurryPlaceholder: boolean = true;
 	export let backgroundColor: string | boolean = '';
 	export let baseURI: string = 'https://media.graphassets.com';
-
+	export let quality: number | undefined = undefined;
+	export let sharpen: number | undefined = undefined;
+	export let rotate: number | undefined = undefined;
+	export let watermark: Watermark | undefined = undefined;
+	const transforms: string[] = [];
 	const seenBefore = inImageCache(image, false);
+
 	// convert style Record<string, any> = {} to a style string
 	const styleString = Object.entries(style)
 		.map(([key, value]) => `${key}: ${value};`)
@@ -44,6 +49,24 @@
 		isVisible = false;
 		imgLoaded = false;
 	}
+
+	// --- Begin Transformation handling
+	if (quality && quality > 0 && quality <= 100) {
+		transforms.push(`quality=value:${quality}`);
+	}
+
+	if (sharpen && sharpen <= 20) {
+		transforms.push(`sharpen=amount:${sharpen}`);
+	}
+
+	if (rotate && rotate > 0 && rotate < 360) {
+		transforms.push(`rotate=deg:${rotate}`);
+	}
+
+	if (watermark) {
+		transforms.push(createWatermarkTransformation(watermark));
+	}
+	// --- End Transformation handling
 
 	function onImageLoaded() {
 		if (IOSupported) {
