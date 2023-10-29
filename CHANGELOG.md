@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.1.3
+
+### Patch Changes
+
+- 4dd03e8: Update package metadata
+
 ## 0.1.2
 
 ### Patch Changes
