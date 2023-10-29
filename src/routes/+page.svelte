@@ -172,6 +172,7 @@
 		border: 1px solid #333;
 		border-radius: 10px;
 		overflow: hidden;
+		height: fit-content;
 	}
 
 	@media (min-width: 600px) {
