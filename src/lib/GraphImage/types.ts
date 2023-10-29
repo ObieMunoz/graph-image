@@ -16,3 +16,11 @@ export interface ResizeParams {
 
 export type ResizeFunction = (resize: string) => TransformFunction;
 export type TransformFunction = (transforms: string[]) => string;
+export type VerticalPosition = 'top' | 'middle' | 'bottom';
+export type HorizontalPosition = 'left' | 'center' | 'right';
+
+export type Watermark = {
+	handle: string;
+	size?: number;
+	position: VerticalPosition | HorizontalPosition | [VerticalPosition, HorizontalPosition];
+};

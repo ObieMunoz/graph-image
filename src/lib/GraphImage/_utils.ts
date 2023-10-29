@@ -4,7 +4,9 @@ import type {
 	ImageCacheType,
 	ResizeParams,
 	ResizeFunction,
-	TransformFunction
+	TransformFunction,
+	Watermark,
+	VerticalPosition
 } from './types.ts';
 
 const imageCache = writable<ImageCacheType>({});
@@ -125,4 +127,27 @@ export function srcSet(
 
 export function imgSizes(maxWidth: number): string {
 	return `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`;
+}
+
+export function createWatermarkTransformation(watermark: Watermark): string {
+	const { handle, size, position } = watermark;
+
+	const defaultVertical = 'middle';
+	const verticalPositions: { [key in VerticalPosition]: true } = {
+		top: true,
+		middle: true,
+		bottom: true
+	};
+
+	let positionStr: string;
+	if (Array.isArray(position)) {
+		positionStr = `${position[0]},${position[1]}`;
+	} else if (verticalPositions[position as VerticalPosition]) {
+		positionStr = position;
+	} else {
+		positionStr = `${defaultVertical},${position}`;
+	}
+
+	const sizeStr = size !== undefined ? `,size:${size}` : '';
+	return `watermark=position:[${positionStr}],file:${handle}${sizeStr}`;
 }
