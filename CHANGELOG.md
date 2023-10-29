@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.1.5
+
+### Patch Changes
+
+- 0fe65be: Impl. Support for Watermarking, Quality, Sharpen, and Rotational values
+
 ## 0.1.4
 
 ### Patch Changes
