@@ -1,16 +1,19 @@
 <script lang="ts">
 	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
 	import type { PageData } from './$types.js';
-	import { features, logo } from './data.js';
 
 	export let data: PageData;
-	const galleryImages = data.data.galleryImages;
+
+	const logo = data.logo;
+	const headline = data.headline;
+	const features = data.features;
+	const galleryImages = data.galleryImages;
 </script>
 
 <header>
 	<GraphImage image={logo} />
 	<h1 class="hidden">graph-image</h1>
-	<p>Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph</p>
+	<p>{headline}</p>
 	<ul>
 		{#each features as feature}
 			<li><span>✓</span> {feature}</li>

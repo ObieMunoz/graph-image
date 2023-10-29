@@ -1,5 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { HYGRAPH_TOKEN, HYGRAPH_URL } from '$env/static/private';
+import type { ImageProps } from '$lib/GraphImage/types';
 
 export const load: PageServerLoad = async () => {
 	const myHeaders = new Headers();
@@ -8,8 +9,7 @@ export const load: PageServerLoad = async () => {
 
 	const graphql = JSON.stringify({
 		query:
-			'query GraphImageQuery($id: ID!) {\n  values: graphImage(where: {id: $id}) {\n    images(first: 500) {\n      handle\n      width\n      height\n    }\n  }\n}',
-		variables: { id: 'clob1jc0y5fs70blfzvdbxv0z' }
+			'query PageTextContentQuery {\n  values: pageTextContent(\n    where: {id: "clob2q6ws5fze0bk8z6g7mt22"}\n    stage: PUBLISHED\n  ) {\n    features\n    headline\n  }\n  graphImages(where: {id: "clob1jc0y5fs70blfzvdbxv0z"}) {\n    id\n    images {\n      handle\n      height\n      width\n    }\n  }\n  logo(where: {id: "clob3dnas5h2v0bl91wi2vc9q"}) {\n    logo {\n      handle\n      height\n      width\n    }\n  }\n}\n'
 	});
 
 	const requestOptions = {
@@ -19,18 +19,49 @@ export const load: PageServerLoad = async () => {
 	};
 
 	let galleryImages = [];
+	let headline = 'Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph';
+	let features = [
+		'Automatically resize images according to your design specifications',
+		'Dynamically serve .webp format where supported, ensuring modern compression techniques are utilized for faster load times',
+		'Generate device-specific variants to ensure optimal download size',
+		'Prioritize initial page speed and conserve bandwidth',
+		"Employ the 'blur-up' technique or a solid background for seamless image loading experiences",
+		'Prevent page layout jumps with consistent image positioning'
+	];
+	let logo: ImageProps = {
+		handle: 'fONBVATVKYm2eBRtzA76',
+		height: 510,
+		width: 1603
+	};
+
 	try {
 		const request = await fetch(HYGRAPH_URL, requestOptions);
 
 		const data = await request.json();
-		galleryImages = data.data.values.images;
+		console.log(data.data.graphImages[0].images);
+
+		if (data.data.graphImages[0].images) {
+			galleryImages = data.data.graphImages[0].images || [];
+		}
+
+		if (data.data.values.headline) {
+			headline = data.data.values.headline;
+		}
+
+		if (data.data.values.features) {
+			features = data.data.values.features;
+		}
+		if (data.data.logo.logo) {
+			logo = data.data.logo.logo;
+		}
 	} catch (e) {
 		console.log(e);
 	}
 
 	return {
-		data: {
-			galleryImages
-		}
+		galleryImages,
+		headline,
+		features,
+		logo
 	};
 };
