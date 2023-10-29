@@ -1,4 +1,5 @@
 ![Graph Image](static/graph-image.png)
+
 # graph-image
 
 <p align="center">Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph</p>

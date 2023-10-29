@@ -4,14 +4,14 @@ export const features = [
 	'Generate device-specific variants to ensure optimal download size',
 	'Prioritize initial page speed and conserve bandwidth',
 	"Employ the 'blur-up' technique or a solid background for seamless image loading experiences",
-	"Prevent page layout jumps with consistent image positioning"
+	'Prevent page layout jumps with consistent image positioning'
 ];
 
 export const logo = {
 	height: 510,
 	width: 1603,
 	handle: 'fONBVATVKYm2eBRtzA76'
-}
+};
 
 export const assets = [
 	{
