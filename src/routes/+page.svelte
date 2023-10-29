@@ -4,7 +4,8 @@
 </script>
 
 <header>
-	<h1>graph-image</h1>
+	<div class="header-image" />
+	<h1 class="hidden">graph-image</h1>
 	<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
 	<ul>
 		{#each features as feature}
@@ -38,23 +39,35 @@
 </div>
 
 <style>
+	.header-image {
+		background-image: url('/graph-image.png');
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center center;
+		height: 100px;
+	}
+
 	header {
 		background-color: #242424;
-		padding: 2rem 3rem;
+		padding: 1.5rem 2rem;
 		border-radius: 10px;
 		box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 	}
 
-	header h1 {
-		font-size: 3rem;
-		color: #fff;
-		margin-bottom: 1.5rem;
+	.hidden {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 0;
+		width: 0;
+		overflow: hidden;
 	}
 
 	header p {
 		font-size: 1.2rem;
 		margin-bottom: 2rem;
 		color: #cfcfcf;
+		text-align: center;
 	}
 
 	header li {
@@ -66,6 +79,7 @@
 	nav {
 		display: flex;
 		flex-direction: column; /* stack them vertically */
+		justify-content: center;
 		gap: 0.5rem;
 		margin-bottom: 2rem;
 	}
@@ -128,8 +142,7 @@
 		justify-content: center;
 		gap: 1rem;
 		max-width: 1200px;
-		padding: 1rem;
-		margin: 0 auto;
+		margin: 1rem auto;
 	}
 
 	.gallery > div:hover {
@@ -155,11 +168,19 @@
 		nav a {
 			font-size: 1rem; /* reset the font size for larger screens */
 		}
+
+		.header-image {
+			height: 175px;
+		}
 	}
 
 	@media (min-width: 900px) {
 		.gallery {
 			grid-template-columns: repeat(3, 1fr); /* 3 images per row */
+		}
+
+		.header-image {
+			height: 275px;
 		}
 	}
 </style>
