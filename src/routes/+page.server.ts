@@ -8,8 +8,28 @@ export const load: PageServerLoad = async () => {
 	myHeaders.append('Authorization', `Bearer ${HYGRAPH_TOKEN}`);
 
 	const graphql = JSON.stringify({
-		query:
-			'query PageTextContentQuery {\n  values: pageTextContent(\n    where: {id: "clob2q6ws5fze0bk8z6g7mt22"}\n    stage: PUBLISHED\n  ) {\n    features\n    headline\n  }\n  graphImages(where: {id: "clob1jc0y5fs70blfzvdbxv0z"}) {\n    id\n    images(first: 100) {\n      handle\n      height\n      width\n    }\n  }\n  logo(where: {id: "clob3dnas5h2v0bl91wi2vc9q"}) {\n    logo {\n      handle\n      height\n      width\n    }\n  }\n}\n'
+		query: `query PageTextContentQuery {
+			  values: pageTextContent(where: {id: "clob2q6ws5fze0bk8z6g7mt22"}
+			    	stage: PUBLISHED) {
+				features
+			    headline
+			}
+			  graphImages(where: {id: "clob1jc0y5fs70blfzvdbxv0z"}) {
+				id
+			    images(first: 100) {
+				      handle
+				      height
+				      width
+			    }
+		  }
+			  logo(where: {id: "clob3dnas5h2v0bl91wi2vc9q"}) {
+				    logo {
+				      handle
+				      height
+				      width
+			    }
+			  }
+			}`
 	});
 
 	const requestOptions = {
@@ -38,7 +58,6 @@ export const load: PageServerLoad = async () => {
 		const request = await fetch(HYGRAPH_URL, requestOptions);
 
 		const data = await request.json();
-		console.log(data.data.graphImages[0].images);
 
 		if (data.data.graphImages[0].images) {
 			galleryImages = data.data.graphImages[0].images || [];
