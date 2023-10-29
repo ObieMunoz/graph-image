@@ -4,8 +4,6 @@
 </script>
 
 <header>
-	<!-- svelte-ignore a11y-img-redundant-alt -->
-	<!-- <img src="/graph-image.png" alt="graph-image" /> -->
 	<div class="header-image" />
 	<h1 class="hidden">graph-image</h1>
 	<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
@@ -46,7 +44,7 @@
 		background-size: contain;
 		background-repeat: no-repeat;
 		background-position: center center;
-		height: 150px;
+		height: 100px;
 	}
 
 	header {
@@ -80,6 +78,7 @@
 	nav {
 		display: flex;
 		flex-direction: column; /* stack them vertically */
+		justify-content: center;
 		gap: 0.5rem;
 		margin-bottom: 2rem;
 	}
@@ -142,8 +141,7 @@
 		justify-content: center;
 		gap: 1rem;
 		max-width: 1200px;
-		padding: 1rem;
-		margin: 0 auto;
+		margin: 1rem auto;
 	}
 
 	.gallery > div:hover {
