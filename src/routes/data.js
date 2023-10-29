@@ -6,6 +6,12 @@ export const features = [
 	"Hold the image position so your page doesn't jump while images load."
 ];
 
+export const logo = {
+	height: 510,
+	width: 1603,
+	handle: 'fONBVATVKYm2eBRtzA76'
+}
+
 export const assets = [
 	{
 		height: 1280,
