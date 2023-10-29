@@ -60,7 +60,7 @@ export const load: PageServerLoad = async () => {
 		const data = await request.json();
 
 		if (data.data.graphImages[0].images) {
-			galleryImages = data.data.graphImages[0].images || [];
+			galleryImages = shuffleArray(data.data.graphImages[0].images) || [];
 		}
 
 		if (data.data.values.headline) {
@@ -84,3 +84,11 @@ export const load: PageServerLoad = async () => {
 		logo
 	};
 };
+
+function shuffleArray(array: ImageProps[]) {
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+	return array;
+}
