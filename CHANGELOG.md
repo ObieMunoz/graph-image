@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.1.4
+
+### Patch Changes
+
+- ca871eb: Moved @changesets/cli to dev dependencies
+
 ## 0.1.3
 
 ### Patch Changes
