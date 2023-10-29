@@ -6,7 +6,7 @@
 <header>
 	<GraphImage image={logo} />
 	<h1 class="hidden">graph-image</h1>
-	<p>Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
+	<p>Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph</p>
 	<ul>
 		{#each features as feature}
 			<li><span>✓</span> {feature}</li>
@@ -17,10 +17,9 @@
 		<a href="https://www.github.com/obiemunoz/graph-image/" target="_blank"> GitHub </a>
 	</nav>
 	<aside>
-		This Svelte project is a port of the original
-		<a href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a> for React by
-		Hygraph. All thanks to the creators and contributors of the original project for their remarkable
-		work.
+		Special thanks to the creators and contributors of <a
+			href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a
+		> for their original work in React that this project was based on.
 	</aside>
 </header>
 
@@ -39,14 +38,6 @@
 </div>
 
 <style>
-	.header-image {
-		background-image: url('/graph-image.png');
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position: center center;
-		height: 100px;
-	}
-
 	header {
 		background-color: #242424;
 		padding: 1.5rem 2rem;
@@ -78,7 +69,7 @@
 
 	nav {
 		display: flex;
-		flex-direction: column; /* stack them vertically */
+		flex-direction: column;
 		justify-content: center;
 		gap: 0.5rem;
 		margin-bottom: 2rem;
@@ -87,14 +78,14 @@
 	nav a {
 		background-color: #4e4feb;
 		color: #fff;
-		padding: 0.4rem 0.8rem; /* reduced padding */
+		padding: 0.4rem 0.8rem;
 		border: none;
 		border-radius: 8px;
 		font-weight: bold;
 		text-align: center;
 		text-decoration: none;
 		transition: background-color 0.2s ease;
-		font-size: 0.9rem; /* smaller font size for mobile */
+		font-size: 0.9rem;
 	}
 
 	nav a:hover {
@@ -168,19 +159,11 @@
 		nav a {
 			font-size: 1rem; /* reset the font size for larger screens */
 		}
-
-		.header-image {
-			height: 175px;
-		}
 	}
 
 	@media (min-width: 900px) {
 		.gallery {
 			grid-template-columns: repeat(3, 1fr); /* 3 images per row */
-		}
-
-		.header-image {
-			height: 275px;
 		}
 	}
 </style>

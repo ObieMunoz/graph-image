@@ -1,19 +1,22 @@
-<h1 align="center">graph-image</h1>
+![Graph Image](static/graph-image.png)
 
-<p align="center">Universal lazy-loading, auto-compressed images with Svelte/SvelteKit and Hygraph.</p>
+# graph-image
+
+<p align="center">Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph</p>
 
 <p align="center">
   <a href="https://graph-image.obiemunoz.com">Demo</a> • <a href="https://www.obiemunoz.com">Obie Munoz</a>
 </p>
 
-- Resize large images to the size needed by your design.
-- Generate multiple smaller images to make sure devices download the optimal-sized one.
-- Efficiently lazy load images to speed initial page load and save bandwidth.
-- Use the "blur-up" technique or solid background color to show a preview of the image while it loads.
-- Hold the image position so your page doesn't jump while images load.
+- Automatically resize images according to your design specifications
+- Dynamically serve .webp format where supported, ensuring modern compression techniques are utilized for-aster load times
+- Generate device-specific variants to ensure optimal download size
+- Prioritize initial page speed and conserve bandwidth
+- Employ the 'blur-up' technique or a solid background for seamless image loading experiences
+- Prevent page layout jumps with consistent image positioning
 
 <p align="center">
-  <strong>Credits & Contribution:</strong> This Svelte project is a port of the original <a href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a> for React by Hygraph. All thanks to the creators and contributors of the original project for their remarkable work.
+<strong>Special thanks</strong> to the creators and contributors of <a href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a> for the original work in React this project was based on.
 </p>
 
 ## Quickstart
