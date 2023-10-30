@@ -32,7 +32,7 @@
 <header>
 	<h1 class="hidden">graph-image</h1>
 	<div class="banner">
-		<GraphImage image={logo} />
+		<GraphImage image={logo} fit="clip"/>
 	</div>
 	<p>{headline}</p>
 	<ul>
@@ -58,6 +58,7 @@
 				title="Sample"
 				alt="Sample"
 				image={{ ...image, width: 3840, height: 2160 }}
+				fit="clip"
 				withWebp
 				maxWidth={1200}
 			/>
