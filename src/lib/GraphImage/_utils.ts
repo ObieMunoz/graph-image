@@ -114,12 +114,13 @@ export function getWidths(width: number, maxWidth: number): number[] {
 export function srcSet(
 	srcBase: (resize: string) => (transforms: string[]) => string,
 	srcWidths: number[],
+	height: number,
 	fit: string,
 	transforms: string[]
 ): string {
 	return srcWidths
 		.map((width) => {
-			const resizeOption = `resize=w:${Math.floor(width)},fit:${fit}`;
+			const resizeOption = `resize=w:${Math.floor(width)},h:${Math.floor(height)},fit:${fit}`;
 			const src = srcBase(resizeOption)(transforms);
 			return `${src} ${Math.floor(width)}w`;
 		})
@@ -171,7 +172,7 @@ export function createFinalURL(
 	const finalSrc = sizedSrc(transforms);
 	const thumbSize = { width: 20, height: 20, fit: 'crop' };
 	const thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
-	const srcSetImgs = srcSet(srcBase, getWidths(image.width, maxWidth), fit, transforms);
+	const srcSetImgs = srcSet(srcBase, getWidths(image.width, maxWidth), image.height, fit, transforms);
 	const sizes = imgSizes(maxWidth);
 	return {
 		finalSrc,
