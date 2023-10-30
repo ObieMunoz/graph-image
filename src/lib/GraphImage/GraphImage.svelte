@@ -18,7 +18,6 @@
 	export let sharpen: number | undefined = undefined;
 	export let rotate: number | undefined = undefined;
 	export let watermark: Watermark | undefined = undefined;
-	export let objectFit: 'cover' | 'contain' = 'cover';
 
 	const seenBefore = inImageCache(image, false);
 	// convert style Record<string, any> = {} to a style string
@@ -45,7 +44,6 @@
 	function onImageLoaded() {
 		if (IOSupported) {
 			imgLoaded = true;
-			blurryPlaceholder = false;
 			inImageCache(image, true);
 		}
 	}
@@ -78,7 +76,6 @@
 				{title}
 				src={thumbSrc}
 				style="opacity: {imgLoaded ? 0 : 1}; transition-delay: 0.25s"
-				{objectFit}
 			/>
 		{/if}
 
@@ -98,7 +95,6 @@
 				src={finalSrc}
 				{sizes}
 				style="opacity: {imgLoaded || !fadeIn ? 1 : 0}"
-				{objectFit}
 				on:imageLoad={onImageLoaded}
 			/>
 		{/if}
