@@ -8,6 +8,7 @@
 	export let opacity: 0 | 1 = 0;
 	export let transitionDelay: string = '0.25s';
 	export let transition: string = 'opacity 0.5s';
+	export let objectFit: 'cover' | 'contain' = 'cover';
 
 	let id = crypto.randomUUID().slice(0, 8);
 
@@ -24,7 +25,7 @@
 	{id}
 	{src}
 	{alt}
-	style={`transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`}
+	style={`transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity}; object-fit: ${objectFit}`}
 />
 
 <style>
@@ -34,7 +35,6 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		object-fit: cover;
 		object-position: center;
 	}
 </style>
