@@ -9,7 +9,7 @@ Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph
 [![publish](https://github.com/obiemunoz/graph-image/actions/workflows/release.yml/badge.svg)](https://github.com/obiemunoz/graph-image/actions/workflows/release.yml)
 [![stars](https://img.shields.io/github/stars/obiemunoz/graph-image)](https://www.github.com/obiemunoz/graph-image)
 
-<a href="https://graph-image.obiemunoz.com">Demo</a> • <a href="https://www.obiemunoz.com">Obie Munoz</a>
+[Demo](https://graph-image.obiemunoz.com) • [Obie Munoz](https://www.obiemunoz.com/)
 
 - Automatically resize images according to your design specifications
 - Dynamically serve .webp format where supported, ensuring modern compression techniques are utilized for-aster load times
@@ -18,7 +18,7 @@ Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph
 - Employ the 'blur-up' technique or a solid background for seamless image loading experiences
 - Prevent page layout jumps with consistent image positioning
 
-<strong>Special thanks</strong> to the creators and contributors of <a href="https://npmjs.org/package/@graphcms/react-image">@graphcms/react-image</a> for the original work in React this project was based on.
+**Special thanks** to the creators and contributors of [@graphcms/react-image](https://npmjs.org/package/@graphcms/react-image) for the work in React this project was based on.
 
 ## Quickstart
 
