@@ -6,8 +6,9 @@ Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph
 
 [![npm version](https://img.shields.io/npm/v/graph-image)](https://npmjs.org/package/graph-image)
 [![downloads](https://img.shields.io/npm/dt/graph-image)](https://npmjs.org/package/graph-image)
-[![publish](https://github.com/obiemunoz/graph-image/actions/workflows/release.yml/badge.svg)](https://github.com/obiemunoz/graph-image/actions/workflows/release.yml)
+[![release status](https://img.shields.io/github/actions/workflow/status/obiemunoz/graph-image/.github%2Fworkflows%2Frelease.yml?logo=github&label=release)](https://github.com/ObieMunoz/graph-image/actions/workflows/release.yml)
 [![stars](https://img.shields.io/github/stars/obiemunoz/graph-image)](https://www.github.com/obiemunoz/graph-image)
+[![demo status](https://img.shields.io/website?up_message=operational&down_message=failure&url=https%3A%2F%2Fgraph-image.obiemunoz.com&label=demo)](https://graph-image.obiemunoz.com)
 
 [Demo](https://graph-image.obiemunoz.com) • [Obie Munoz](https://www.obiemunoz.com/)
 
