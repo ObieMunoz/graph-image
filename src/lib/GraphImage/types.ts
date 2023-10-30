@@ -24,3 +24,5 @@ export type Watermark = {
 	size?: number;
 	position: VerticalPosition | HorizontalPosition | [VerticalPosition, HorizontalPosition];
 };
+
+export type Fit = 'clip' | 'crop' | 'scale' | 'max';

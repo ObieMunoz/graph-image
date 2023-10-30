@@ -6,7 +6,8 @@ import type {
 	ResizeFunction,
 	TransformFunction,
 	Watermark,
-	VerticalPosition
+	VerticalPosition,
+	Fit
 } from './types.ts';
 
 const imageCache = writable<ImageCacheType>({});
@@ -150,4 +151,59 @@ export function createWatermarkTransformation(watermark: Watermark): string {
 
 	const sizeStr = size !== undefined ? `,size:${size}` : '';
 	return `watermark=position:[${positionStr}],file:${handle}${sizeStr}`;
+}
+
+export function createFinalURL(
+	image: ImageProps,
+	withWebp: boolean,
+	baseURI: string,
+	maxWidth: number,
+	fit: Fit,
+	quality: number | undefined,
+	sharpen: number | undefined,
+	rotate: number | undefined,
+	watermark: Watermark | undefined
+) {
+	const transforms = createTransformations(quality, sharpen, rotate, watermark);
+	const srcBase = constructURL(image.handle, withWebp, baseURI);
+	const thumbBase = constructURL(image.handle, false, baseURI);
+	const sizedSrc = srcBase(resizeImage({ width: image.width, height: image.height, fit }));
+	const finalSrc = sizedSrc(transforms);
+	const thumbSize = { width: 20, height: 20, fit: 'crop' };
+	const thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
+	const srcSetImgs = srcSet(srcBase, getWidths(image.width, maxWidth), fit, transforms);
+	const sizes = imgSizes(maxWidth);
+	return {
+		finalSrc,
+		thumbSrc,
+		srcSetImgs,
+		sizes
+	};
+}
+
+function createTransformations(
+	quality: number | undefined,
+	sharpen: number | undefined,
+	rotate: number | undefined,
+	watermark: Watermark | undefined
+) {
+	const transforms = [];
+
+	if (quality && quality > 0 && quality <= 100) {
+		transforms.push(`quality=value:${quality}`);
+	}
+
+	if (sharpen && sharpen <= 20) {
+		transforms.push(`sharpen=amount:${sharpen}`);
+	}
+
+	if (rotate && rotate > 0 && rotate < 360) {
+		transforms.push(`rotate=deg:${rotate}`);
+	}
+
+	if (watermark) {
+		transforms.push(createWatermarkTransformation(watermark));
+	}
+
+	return transforms;
 }

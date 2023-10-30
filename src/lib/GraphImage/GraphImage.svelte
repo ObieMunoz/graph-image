@@ -1,22 +1,12 @@
 <script lang="ts">
 	import Image from './Image.svelte';
-	import {
-		bgColor,
-		constructURL,
-		createWatermarkTransformation,
-		getWidths,
-		imgSizes,
-		inImageCache,
-		listenToIntersections,
-		resizeImage,
-		srcSet
-	} from './_utils.js';
-	import type { ImageProps, Watermark } from './types.ts';
+	import { bgColor, createFinalURL, inImageCache, listenToIntersections } from './_utils.js';
+	import type { Fit, ImageProps, Watermark } from './types.ts';
 
 	export let image: ImageProps;
 	export let maxWidth: number = 800;
 	export let fadeIn: boolean = true;
-	export let fit: 'clip' | 'crop' | 'scale' | 'max' = 'crop';
+	export let fit: Fit = 'crop';
 	export let withWebp: boolean = true;
 	export let title: string = '';
 	export let alt: string = '';
@@ -28,45 +18,28 @@
 	export let sharpen: number | undefined = undefined;
 	export let rotate: number | undefined = undefined;
 	export let watermark: Watermark | undefined = undefined;
-	const transforms: string[] = [];
-	const seenBefore = inImageCache(image, false);
 
+	const seenBefore = inImageCache(image, false);
 	// convert style Record<string, any> = {} to a style string
 	const styleString = Object.entries(style)
 		.map(([key, value]) => `${key}: ${value};`)
 		.join('');
+	const { finalSrc, sizes, srcSetImgs, thumbSrc } = createFinalURL(
+		image,
+		withWebp,
+		baseURI,
+		maxWidth,
+		fit,
+		quality,
+		sharpen,
+		rotate,
+		watermark
+	);
 
-	let divRef: HTMLElement | null = null;
-	let finalSrc = '';
+	let imageInnerWrapper: HTMLElement | null = null;
 	let imgLoaded = false;
 	let IOSupported = typeof window !== 'undefined' && typeof IntersectionObserver !== 'undefined';
 	let isVisible = false;
-	let thumbSrc = '';
-	let srcSetImgs = '';
-	let sizes = '';
-
-	if (!seenBefore && IOSupported) {
-		isVisible = false;
-		imgLoaded = false;
-	}
-
-	// --- Begin Transformation handling
-	if (quality && quality > 0 && quality <= 100) {
-		transforms.push(`quality=value:${quality}`);
-	}
-
-	if (sharpen && sharpen <= 20) {
-		transforms.push(`sharpen=amount:${sharpen}`);
-	}
-
-	if (rotate && rotate > 0 && rotate < 360) {
-		transforms.push(`rotate=deg:${rotate}`);
-	}
-
-	if (watermark) {
-		transforms.push(createWatermarkTransformation(watermark));
-	}
-	// --- End Transformation handling
 
 	function onImageLoaded() {
 		if (IOSupported) {
@@ -75,28 +48,16 @@
 		}
 	}
 
-	$: if (divRef && IOSupported) {
-		listenToIntersections(divRef, () => {
+	$: if (imageInnerWrapper && IOSupported) {
+		listenToIntersections(imageInnerWrapper, () => {
 			isVisible = true;
 			imgLoaded = false;
 		});
 	}
 
-	$: if (image && image.width && image.height && image.handle) {
-		const srcBase = constructURL(image.handle, withWebp, baseURI);
-		const thumbBase = constructURL(image.handle, false, baseURI);
-
-		// Final Image URL
-		const sizedSrc = srcBase(resizeImage({ width: image.width, height: image.height, fit }));
-		finalSrc = sizedSrc(transforms);
-
-		// Blurry Placeholder URL
-		const thumbSize = { width: 20, height: 20, fit: 'crop' };
-		thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
-
-		// srcSet if maxWidth is provided
-		srcSetImgs = srcSet(srcBase, getWidths(image.width, maxWidth), fit, transforms);
-		sizes = imgSizes(maxWidth);
+	$: if (!seenBefore && IOSupported) {
+		isVisible = false;
+		imgLoaded = false;
 	}
 </script>
 
@@ -105,7 +66,7 @@
 	class:initial={style.position === 'absolute'}
 	class:relative={style.position !== 'absolute'}
 >
-	<div class="inner" style={styleString} bind:this={divRef}>
+	<div class="inner" style={styleString} bind:this={imageInnerWrapper}>
 		<!-- Preserve the aspect ratio. -->
 		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%" />
 
