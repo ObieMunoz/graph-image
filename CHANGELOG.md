@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.1.6
+
+### Patch Changes
+
+- 8c1739f: Resolved an issue where height was not being passed to srcset images
+
 ## 0.1.5
 
 ### Patch Changes
