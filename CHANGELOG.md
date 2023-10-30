@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.1.7
+
+### Patch Changes
+
+- 8d0cdf3: Allow passing objectFit cover or contain; defaulting to cover
+
 ## 0.1.6
 
 ### Patch Changes
