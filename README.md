@@ -70,4 +70,4 @@ Here's an example using a static asset object.
 | `sharpen`           | `number`			             | Set the image sharpen value between 0 and 20 |
 | `rotate`            | `number`                         | Set the image rotation between 0 & 360 degrees |
 | `watermark`         | `object`                         | An object of shape `{ handle, size, position }`. Handle is an identifier required to display the image. `size` is an optional `number`. `position` is required and can either be a `string` `HorizontalPosition` or a `tuple` of shape `[VerticalPosition, HorizontalPosition]` where `VerticalPosition` can be `'top' \| 'middle' \| 'bottom'` and `HorizontalPosition` can be `'left' \| 'center' \| 'right` |
-| `eager` 			  | `boolean` 			             | Do you want to prioritize loading? This will place preload tags in the <head> and will remove transition effects. |
+| `eager` 			  | `boolean` 			             | Do you want to prioritize loading? This will place preload tags in the `<head>` and will remove transition effects. |
