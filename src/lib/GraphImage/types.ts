@@ -26,3 +26,4 @@ export type Watermark = {
 };
 
 export type Fit = 'clip' | 'crop' | 'scale' | 'max';
+export type Load = 'lazy' | 'eager';

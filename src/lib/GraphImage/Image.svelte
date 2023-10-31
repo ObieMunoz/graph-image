@@ -8,7 +8,7 @@
 	export let opacity: 0 | 1 = 0;
 	export let transitionDelay: string = '0.25s';
 	export let transition: string = 'opacity 0.5s';
-	export let eager = false;
+	export let load = 'lazy';
 
 	let id = crypto.randomUUID().slice(0, 8);
 
@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-	{#if eager}
+	{#if load === 'eager'}
 		<link rel="preload" as="image" href={src} imagesrcset={$$props?.srcset} imagesizes={$$props?.sizes} />
 	{/if}
 </svelte:head>
@@ -31,7 +31,7 @@
 	{id}
 	{src}
 	{alt}
-	style={eager ? '' : `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`}
+	style={load === 'eager' ? '' : `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`}
 />
 
 <style>

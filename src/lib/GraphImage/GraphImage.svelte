@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Image from './Image.svelte';
 	import { bgColor, createFinalURL, inImageCache, listenToIntersections } from './_utils.js';
-	import type { Fit, ImageProps, Watermark } from './types.ts';
+	import type { Fit, ImageProps, Load, Watermark } from './types.ts';
 
 	export let image: ImageProps;
 	export let maxWidth: number = 800;
@@ -18,7 +18,7 @@
 	export let sharpen: number | undefined = undefined;
 	export let rotate: number | undefined = undefined;
 	export let watermark: Watermark | undefined = undefined;
-	export let eager = false;
+	export let load: Load = 'lazy';
 
 	const seenBefore = inImageCache(image, false);
 	// convert style Record<string, any> = {} to a style string
@@ -71,13 +71,13 @@
 		<!-- Preserve the aspect ratio. -->
 		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%" />
 
-		{#if blurryPlaceholder && !eager}
+		{#if blurryPlaceholder && load == 'lazy'}
 			<Image
 				{alt}
 				{title}
 				src={thumbSrc}
 				style="opacity: {imgLoaded ? 0 : 1}; transition-delay: 0.25s"
-				{eager}
+				{load}
 			/>
 		{/if}
 
@@ -98,7 +98,7 @@
 				{sizes}
 				style="opacity: {imgLoaded || !fadeIn ? 1 : 0}"
 				on:imageLoad={onImageLoaded}
-				{eager}
+				{load}
 			/>
 		{/if}
 	</div>
