@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { createLoadObserver } from './_utils.js';
+	import type { Load } from './types.js';
 
 	const dispatch = createEventDispatcher();
 	export let src: string;
@@ -8,7 +9,7 @@
 	export let opacity: 0 | 1 = 0;
 	export let transitionDelay: string = '0.25s';
 	export let transition: string = 'opacity 0.5s';
-	export let load = 'lazy';
+	export let load: Load = 'lazy';
 
 	let id = crypto.randomUUID().slice(0, 8);
 
