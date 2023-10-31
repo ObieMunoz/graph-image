@@ -71,7 +71,7 @@
 		<!-- Preserve the aspect ratio. -->
 		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%" />
 
-		{#if blurryPlaceholder}
+		{#if blurryPlaceholder && !eager}
 			<Image
 				{alt}
 				{title}
