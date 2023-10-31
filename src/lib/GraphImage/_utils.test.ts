@@ -55,13 +55,6 @@ describe('_utils.ts // Utility Functions', () => {
 		});
 	});
 
-	describe('listenToIntersections', () => {
-		it('should observe the element and add to listeners', () => {
-			// You would need to mock getIO and listeners for this test.
-			// The implementation will be specific to how vitest handles mocking.
-		});
-	});
-
 	describe('bgColor', () => {
 		it('should return lightgray when input is boolean', () => {
 			expect(bgColor(true)).toBe('lightgray');
@@ -124,12 +117,12 @@ describe('_utils.ts // Utility Functions', () => {
 			const mockFit = 'cover';
 			const mockTransforms = ['transform1', 'transform2'];
 
-			const result = srcSet(mockSrcBase, mockSrcWidths, mockFit, mockTransforms);
+			const result = srcSet(mockSrcBase, mockSrcWidths, 300, mockFit, mockTransforms);
 
 			expect(result).toBe(
-				`http://example.com/resize=w:100,fit:cover/transform1/transform2 100w,\n` +
-					`http://example.com/resize=w:200,fit:cover/transform1/transform2 200w,\n` +
-					`http://example.com/resize=w:300,fit:cover/transform1/transform2 300w`
+				`http://example.com/resize=w:100,h:300,fit:cover/transform1/transform2 100w,\n` +
+					`http://example.com/resize=w:200,h:300,fit:cover/transform1/transform2 200w,\n` +
+					`http://example.com/resize=w:300,h:300,fit:cover/transform1/transform2 300w`
 			);
 		});
 	});

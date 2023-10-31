@@ -8,7 +8,7 @@ import type {
 	Watermark,
 	VerticalPosition,
 	Fit
-} from './types.ts';
+} from './types.js';
 
 const imageCache = writable<ImageCacheType>({});
 let io: IntersectionObserver | undefined;
@@ -172,7 +172,13 @@ export function createFinalURL(
 	const finalSrc = sizedSrc(transforms);
 	const thumbSize = { width: 20, height: 20, fit: 'crop' };
 	const thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
-	const srcSetImgs = srcSet(srcBase, getWidths(image.width, maxWidth), image.height, fit, transforms);
+	const srcSetImgs = srcSet(
+		srcBase,
+		getWidths(image.width, maxWidth),
+		image.height,
+		fit,
+		transforms
+	);
 	const sizes = imgSizes(maxWidth);
 	return {
 		finalSrc,
