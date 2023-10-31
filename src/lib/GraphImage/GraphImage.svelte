@@ -18,6 +18,7 @@
 	export let sharpen: number | undefined = undefined;
 	export let rotate: number | undefined = undefined;
 	export let watermark: Watermark | undefined = undefined;
+	export let eager = false;
 
 	const seenBefore = inImageCache(image, false);
 	// convert style Record<string, any> = {} to a style string
@@ -36,7 +37,7 @@
 		watermark
 	);
 
-	let imageInnerWrapper: HTMLElement | null = null;
+	let imageInnerWrapper: HTMLElement;
 	let imgLoaded = false;
 	let IOSupported = typeof window !== 'undefined' && typeof IntersectionObserver !== 'undefined';
 	let isVisible = false;
@@ -76,6 +77,7 @@
 				{title}
 				src={thumbSrc}
 				style="opacity: {imgLoaded ? 0 : 1}; transition-delay: 0.25s"
+				{eager}
 			/>
 		{/if}
 
@@ -96,6 +98,7 @@
 				{sizes}
 				style="opacity: {imgLoaded || !fadeIn ? 1 : 0}"
 				on:imageLoad={onImageLoaded}
+				{eager}
 			/>
 		{/if}
 	</div>
