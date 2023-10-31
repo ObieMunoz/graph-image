@@ -32,7 +32,7 @@
 <header>
 	<h1 class="hidden">graph-image</h1>
 	<div class="banner">
-		<GraphImage image={logo} fit="clip" eager />
+		<GraphImage image={logo} fit="clip" load="eager" />
 	</div>
 	<p>{headline}</p>
 	<ul>
