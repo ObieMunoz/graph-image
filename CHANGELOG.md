@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.1.7
+
+### Patch Changes
+
+- abd3b1b: Implemented an option for eager loading which will prioritize the load by placing an image preload link in the document head
+
 ## 0.1.6
 
 ### Patch Changes
