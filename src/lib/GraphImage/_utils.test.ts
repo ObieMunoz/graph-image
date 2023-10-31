@@ -104,7 +104,7 @@ describe('_utils.ts // Utility Functions', () => {
 	describe('responsiveSizes', () => {
 		it('should return an array of responsive sizes', () => {
 			const sizes = responsiveSizes(100);
-			expect(sizes).toEqual([25, 50, 100, 150, 200, 300]);
+			expect(sizes).toEqual([25, 50, 100, 1501, 200, 300]);
 		});
 	});
 
