@@ -25,8 +25,8 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={SEO.title} />
 	<meta name="twitter:description" content={SEO.description} />
-	<!-- <meta property="og:image" content="URL_TO_YOUR_IMAGE"> -->
-	<!-- <meta name="twitter:image" content="URL_TO_YOUR_IMAGE"> -->
+	<meta property="og:image" content="/ogimage.png" />
+	<meta name="twitter:image" content="/ogimage.png" />
 </svelte:head>
 
 <header>

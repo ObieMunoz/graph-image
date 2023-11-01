@@ -13,10 +13,10 @@ Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph
 [Demo](https://graph-image.obiemunoz.com) • [Obie Munoz](https://www.obiemunoz.com/)
 
 - Automatically resize images according to your design specifications
-- Dynamically serve .webp format where supported, ensuring modern compression techniques are utilized for-aster load times
+- Dynamically serve .webp format where supported, ensuring modern compression techniques are utilized for faster load times
 - Generate device-specific variants to ensure optimal download size
 - Prioritize initial page speed and conserve bandwidth
-- Employ the 'blur-up' technique or a solid background for seamless image loading experiences
+- Employ the 'blur-in' technique or a solid background for seamless image loading experiences
 - Prevent page layout jumps with consistent image positioning
 
 **Special thanks** to the creators and contributors of [@graphcms/react-image](https://npmjs.org/package/@graphcms/react-image) for the work in React this project was based on.
