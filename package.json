@@ -1,7 +1,9 @@
 {
 	"name": "graph-image",
+	"displayName": "Graph Image",
 	"version": "0.1.7",
 	"author": "Obie Munoz obiemunozjr@gmail.com",
+	"description": "Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph",
 	"license": "MIT",
 	"keywords": [
 		"hygraph",
@@ -12,7 +14,11 @@
 		"svelte-kit"
 	],
 	"repository": {
+		"type": "git",
 		"url": "https://github.com/ObieMunoz/graph-image"
+	},
+	"bugs": {
+		"url": "https://github.com/ObieMunoz/graph-image/issues"
 	},
 	"homepage": "https://graph-image.obiemunoz.com",
 	"scripts": {
@@ -34,6 +40,7 @@
 			"svelte": "./dist/index.js"
 		}
 	},
+	"main": "dist/index.js",
 	"files": [
 		"dist",
 		"!dist/**/*.test.*",
