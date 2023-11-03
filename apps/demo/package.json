@@ -53,7 +53,6 @@
 		"vitest": "^0.34.0"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-vercel": "^3.0.3",
 		"graph-image": "workspace:*"
 	},
 	"type": "module"
