@@ -8,7 +8,6 @@
     },
     "format": {},
     "test": {},
-    "release": {},
     "build": {
       "dependsOn": ["^package", "^build"],
       "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
@@ -18,5 +17,6 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalDotEnv": [".env"]
 }
