@@ -1,4 +1,4 @@
-export interface ImageProps {
+export interface GraphAsset {
 	handle: string;
 	height: number;
 	width: number;

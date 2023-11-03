@@ -1,5 +1,7 @@
 <script lang="ts">
-	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
+	import Banner from '../lib/Banner/Banner.svelte';
+
+	import { GraphImage } from 'graph-image';
 	import type { PageData } from './$types.js';
 
 	export let data: PageData;
@@ -31,9 +33,7 @@
 
 <header>
 	<h1 class="hidden">graph-image</h1>
-	<div class="banner">
-		<GraphImage image={logo} fit="clip" load="eager" />
-	</div>
+	<Banner {logo} />
 	<p>{headline}</p>
 	<ul>
 		{#each features as feature}

@@ -21,7 +21,13 @@
 
 <svelte:head>
 	{#if load === 'eager'}
-		<link rel="preload" as="image" href={src} imagesrcset={$$props?.srcset} imagesizes={$$props?.sizes} />
+		<link
+			rel="preload"
+			as="image"
+			href={src}
+			imagesrcset={$$props?.srcset}
+			imagesizes={$$props?.sizes}
+		/>
 	{/if}
 </svelte:head>
 
@@ -32,7 +38,9 @@
 	{id}
 	{src}
 	{alt}
-	style={load === 'eager' ? '' : `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`}
+	style={load === 'eager'
+		? ''
+		: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`}
 />
 
 <style>
