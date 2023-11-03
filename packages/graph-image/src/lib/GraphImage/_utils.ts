@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store';
 import type {
-	ImageProps,
+	GraphAsset,
 	ImageCacheType,
 	ResizeParams,
 	ResizeFunction,
@@ -30,7 +30,7 @@ export const createLoadObserver = (handler: () => void) => {
 	return onload;
 };
 
-export function inImageCache(image: ImageProps, shouldCache: boolean): boolean {
+export function inImageCache(image: GraphAsset, shouldCache: boolean): boolean {
 	const cache = get(imageCache);
 
 	if (cache[image.handle]) {
@@ -155,7 +155,7 @@ export function createWatermarkTransformation(watermark: Watermark): string {
 }
 
 export function createFinalURL(
-	image: ImageProps,
+	image: GraphAsset,
 	withWebp: boolean,
 	baseURI: string,
 	maxWidth: number,

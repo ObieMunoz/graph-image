@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Image from './Image.svelte';
 	import { bgColor, createFinalURL, inImageCache, listenToIntersections } from './_utils.js';
-	import type { Fit, ImageProps, Load, Watermark } from './types.ts';
+	import type { Fit, GraphAsset, Load, Watermark } from './types.ts';
 
-	export let image: ImageProps;
+	export let image: GraphAsset;
 	export let maxWidth: number = 800;
 	export let fadeIn: boolean = true;
 	export let fit: Fit = 'crop';

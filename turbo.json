@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "package": {
+      "dependsOn": ["^package"],
+      "inputs": ["src/**"],
+      "outputs": ["dist/**"]
+    },
+    "format": {},
+    "test": {},
+    "build": {
+      "dependsOn": ["^package"],
+      "outputs": [".svelte-kit/**", ".vercel/**"]
+    },
+    "lint": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

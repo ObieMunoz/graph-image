@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { HYGRAPH_TOKEN, HYGRAPH_URL } from '$env/static/private';
-import type { ImageProps } from '$lib/GraphImage/types';
+import type { GraphImageTypes } from 'graph-image';
 
 export const load: PageServerLoad = async () => {
 	const myHeaders = new Headers();
@@ -38,7 +38,7 @@ export const load: PageServerLoad = async () => {
 		body: graphql
 	};
 
-	let galleryImages: ImageProps[] = [];
+	let galleryImages: GraphImageTypes.GraphAsset[] = [];
 	let headline = 'Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph';
 	let features = [
 		'Automatically resize images according to your design specifications',
@@ -48,7 +48,7 @@ export const load: PageServerLoad = async () => {
 		"Employ the 'blur-up' technique or a solid background for seamless image loading experiences",
 		'Prevent page layout jumps with consistent image positioning'
 	];
-	let logo: ImageProps = {
+	let logo: GraphImageTypes.GraphAsset = {
 		handle: 'fONBVATVKYm2eBRtzA76',
 		height: 510,
 		width: 1603
@@ -85,7 +85,7 @@ export const load: PageServerLoad = async () => {
 	};
 };
 
-function shuffleArray(array: ImageProps[]) {
+function shuffleArray(array: GraphImageTypes.GraphAsset[]) {
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[array[i], array[j]] = [array[j], array[i]];

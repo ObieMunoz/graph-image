@@ -1,5 +1,5 @@
 <script lang="ts">
-	import GraphImage from '$lib/GraphImage/GraphImage.svelte';
+	import { GraphImage } from 'graph-image';
 	import type { PageData } from './$types.js';
 
 	export let data: PageData;
