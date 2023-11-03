@@ -10,7 +10,7 @@
     "test": {},
     "build": {
       "dependsOn": ["^package", "^build"],
-      "outputs": [".svelte-kit/**", ".vercel/**"]
+      "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
     },
     "lint": {},
     "dev": {
