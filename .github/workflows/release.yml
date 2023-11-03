@@ -40,3 +40,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          HYGRAPH_TOKEN: ${{ secrets.HYGRAPH_TOKEN }}
+          HYGRAPH_URL: ${{ secrets.HYGRAPH_URL }}
