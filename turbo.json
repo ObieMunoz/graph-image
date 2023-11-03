@@ -14,6 +14,7 @@
     },
     "lint": {},
     "dev": {
+      "dependsOn": ["^package"],
       "cache": false,
       "persistent": true
     }

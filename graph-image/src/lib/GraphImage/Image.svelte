@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { createLoadObserver } from './_utils.js';
 	import type { Load } from './types.js';
 
 	const dispatch = createEventDispatcher();
@@ -13,10 +12,13 @@
 
 	let id = crypto.randomUUID().slice(0, 8);
 
-	const onload = createLoadObserver(() => {
-		opacity = 1;
+	function handleLoading(e: Event) {
+		if (!(e.target instanceof HTMLImageElement)) return;
+
+		if (e.target.complete) opacity = 1;
+
 		dispatch('imageLoad');
-	});
+	}
 </script>
 
 <svelte:head>
@@ -32,8 +34,6 @@
 </svelte:head>
 
 <img
-	use:onload
-	on:load
 	{...$$props}
 	{id}
 	{src}
@@ -41,6 +41,7 @@
 	style={load === 'eager'
 		? ''
 		: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`}
+	on:load={handleLoading}
 />
 
 <style>

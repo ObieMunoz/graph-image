@@ -20,23 +20,6 @@
 	export let watermark: Watermark | undefined = undefined;
 	export let load: Load = 'lazy';
 
-	const seenBefore = inImageCache(image, false);
-	// convert style Record<string, any> = {} to a style string
-	const styleString = Object.entries(style)
-		.map(([key, value]) => `${key}: ${value};`)
-		.join('');
-	const { finalSrc, sizes, srcSetImgs, thumbSrc } = createFinalURL(
-		image,
-		withWebp,
-		baseURI,
-		maxWidth,
-		fit,
-		quality,
-		sharpen,
-		rotate,
-		watermark
-	);
-
 	let imageInnerWrapper: HTMLElement;
 	let imgLoaded = false;
 	let IOSupported = typeof window !== 'undefined' && typeof IntersectionObserver !== 'undefined';
@@ -49,6 +32,23 @@
 		}
 	}
 
+	$: seenBefore = inImageCache(image, false);
+	// convert style Record<string, any> = {} to a style string
+	$: styleString = Object.entries(style)
+		.map(([key, value]) => `${key}: ${value};`)
+		.join('');
+	$: imageData = createFinalURL(
+		image,
+		withWebp,
+		baseURI,
+		maxWidth,
+		fit,
+		quality,
+		sharpen,
+		rotate,
+		watermark
+	);
+
 	$: if (imageInnerWrapper && IOSupported) {
 		listenToIntersections(imageInnerWrapper, () => {
 			isVisible = true;
@@ -59,6 +59,9 @@
 	$: if (!seenBefore && IOSupported) {
 		isVisible = false;
 		imgLoaded = false;
+	} else if (!IOSupported || seenBefore) {
+		isVisible = true;
+		imgLoaded = true;
 	}
 </script>
 
@@ -72,13 +75,7 @@
 		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%" />
 
 		{#if blurryPlaceholder && load == 'lazy'}
-			<Image
-				{alt}
-				{title}
-				src={thumbSrc}
-				style="opacity: {imgLoaded ? 0 : 1}; transition-delay: 0.25s"
-				{load}
-			/>
+			<Image {alt} {title} src={imageData.thumbSrc} {load} />
 		{/if}
 
 		{#if backgroundColor}
@@ -89,16 +86,16 @@
 			/>
 		{/if}
 
-		{#if isVisible}
+		{#if isVisible || load === 'eager'}
 			<Image
 				{alt}
 				{title}
-				srcset={srcSetImgs}
-				src={finalSrc}
-				{sizes}
-				style="opacity: {imgLoaded || !fadeIn ? 1 : 0}"
-				on:imageLoad={onImageLoaded}
+				srcset={imageData.srcSetImgs}
+				src={imageData.finalSrc}
+				opacity={fadeIn ? 0 : 1}
+				sizes={imageData.sizes}
 				{load}
+				on:imageLoad={onImageLoaded}
 			/>
 		{/if}
 	</div>
