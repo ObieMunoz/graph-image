@@ -1,4 +1,4 @@
-![Graph Image](static/graph-image.png)
+![Graph Image](apps/demo/static/graph-image.png)
 
 # graph-image
 
