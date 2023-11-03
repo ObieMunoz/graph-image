@@ -12,10 +12,6 @@
       "dependsOn": ["^package", "^build"],
       "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
     },
-    "gh-build": {
-      "dependsOn": ["^package"],
-      "outputs": [".svelte-kit/**", "dist/**"]
-    },
     "lint": {},
     "dev": {
       "cache": false,
