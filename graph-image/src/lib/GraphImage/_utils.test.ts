@@ -1,5 +1,4 @@
 import {
-	createLoadObserver,
 	srcSet,
 	bgColor,
 	resizeImage,
@@ -11,50 +10,7 @@ import {
 } from './_utils.js';
 import { describe, it, expect } from 'vitest';
 
-type MockListeners = {
-	[event: string]: Array<() => void>;
-};
-
 describe('_utils.ts // Utility Functions', () => {
-	describe('createLoadObserver', () => {
-		it('should increment and decrement waiting count and call handler appropriately', async () => {
-			let handlerCalled = false;
-			const handler = () => {
-				handlerCalled = true;
-			};
-			const mockElement = () => {
-				const listeners: MockListeners = {};
-
-				return {
-					addEventListener: (event: string, callback: () => void) => {
-						if (!listeners[event]) {
-							listeners[event] = [];
-						}
-						(listeners[event] as Array<() => void>).push(callback);
-					},
-					trigger: (event: string) => {
-						const eventListeners = listeners[event];
-						if (eventListeners) {
-							for (const callback of eventListeners) {
-								callback();
-							}
-						}
-					}
-				};
-			};
-			const onload = createLoadObserver(handler);
-			const el1 = mockElement();
-			const el2 = mockElement();
-			onload(el1 as unknown as Element);
-			onload(el2 as unknown as Element);
-			expect(handlerCalled).toBe(false);
-			el1.trigger('load');
-			expect(handlerCalled).toBe(false);
-			el2.trigger('load');
-			expect(handlerCalled).toBe(true);
-		});
-	});
-
 	describe('bgColor', () => {
 		it('should return lightgray when input is boolean', () => {
 			expect(bgColor(true)).toBe('lightgray');

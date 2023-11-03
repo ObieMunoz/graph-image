@@ -14,22 +14,6 @@ const imageCache = writable<ImageCacheType>({});
 let io: IntersectionObserver | undefined;
 const listeners: [Element, () => void][] = [];
 
-export const createLoadObserver = (handler: () => void) => {
-	let waiting = 0;
-
-	const onload = (el: Element) => {
-		waiting++;
-		el.addEventListener('load', () => {
-			waiting--;
-			if (waiting === 0) {
-				handler();
-			}
-		});
-	};
-
-	return onload;
-};
-
 export function inImageCache(image: GraphAsset, shouldCache: boolean): boolean {
 	const cache = get(imageCache);
 
@@ -47,7 +31,7 @@ export function inImageCache(image: GraphAsset, shouldCache: boolean): boolean {
 	return false;
 }
 
-export function getIO(): IntersectionObserver {
+function getIO(): IntersectionObserver {
 	if (!io && typeof window !== 'undefined') {
 		io = new IntersectionObserver(
 			(entries) => {
