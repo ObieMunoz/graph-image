@@ -5,6 +5,7 @@
 
 	export let image: GraphAsset;
 	export let maxWidth: number = 800;
+	export let fadeIn: boolean = true;
 	export let fit: Fit = 'crop';
 	export let withWebp: boolean = true;
 	export let title: string = '';
@@ -91,6 +92,7 @@
 				{title}
 				srcset={imageData.srcSetImgs}
 				src={imageData.finalSrc}
+				opacity={fadeIn ? 0 : 1}
 				sizes={imageData.sizes}
 				{load}
 				on:imageLoad={onImageLoaded}
