@@ -1,5 +1,14 @@
 # graph-image
 
+## 0.1.8
+
+### Patch Changes
+
+- 9e7ba5a: - Add more efficent image load check
+  - Fixed SSR for `eager` image
+  - Fixed CSR on Sveltekit by making props reactive
+  - Clean up styles for opacity
+
 ## 0.1.7
 
 ### Patch Changes
