@@ -27,4 +27,4 @@ jobs:
         run: pnpm install
 
       - name: Run Unit Tests
-        run: turbo test
+        run: pnpm turbo test
