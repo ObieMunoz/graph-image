@@ -45,8 +45,12 @@
 		"vitest": "^0.34.0"
 	},
 	"dependencies": {
-		"svelte": "^4.0.0",
-		"graph-image": "workspace:*"
+		"@graphql-typed-document-node/core": "^3.2.0",
+		"@vercel/analytics": "^1.1.1",
+		"graph-image": "workspace:*",
+		"graphql": "^16.8.1",
+		"graphql-request": "^6.1.0",
+		"svelte": "^4.0.0"
 	},
 	"type": "module"
 }
