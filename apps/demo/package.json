@@ -18,6 +18,9 @@
 		"type": "git",
 		"url": "https://github.com/ObieMunoz/graph-image"
 	},
+	"exports": {
+		".": {}
+	},
 	"homepage": "https://graph-image.obiemunoz.com",
 	"scripts": {
 		"dev": "vite dev",
