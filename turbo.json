@@ -8,6 +8,7 @@
     },
     "format": {},
     "test": {},
+    "release": {},
     "build": {
       "dependsOn": ["^package", "^build"],
       "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
