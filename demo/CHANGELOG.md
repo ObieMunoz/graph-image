@@ -1,5 +1,11 @@
 # graph-image-demo
 
+## 0.1.0
+
+### Minor Changes
+
+- 3207609: Added @vercel/analytics and appropriate graphql packages to the demo now that they will not become dependencies for the main package
+
 ## 0.0.2
 
 ### Patch Changes
