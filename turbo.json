@@ -9,7 +9,7 @@
     "format": {},
     "test": {},
     "build": {
-      "dependsOn": ["^package"],
+      "dependsOn": ["^package", "^build"],
       "outputs": [".svelte-kit/**", ".vercel/**"]
     },
     "lint": {},
