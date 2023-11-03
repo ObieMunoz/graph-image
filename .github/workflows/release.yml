@@ -29,7 +29,7 @@ jobs:
         run: pnpm install
 
       - name: Run Unit Tests
-        run: pnpm vitest run
+        run: pnpm turbo test
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
