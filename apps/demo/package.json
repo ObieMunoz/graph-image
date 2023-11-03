@@ -14,17 +14,9 @@
 		"sveltekit",
 		"svelte-kit"
 	],
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/ObieMunoz/graph-image"
-	},
-	"exports": {
-		".": {}
-	},
-	"homepage": "https://graph-image.obiemunoz.com",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npm run package",
+		"build": "vite build",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",
 		"prepublishOnly": "npm run package",
@@ -32,9 +24,6 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin=prettier-plugin-svelte --check . && eslint .",
 		"format": "prettier --plugin=prettier-plugin-svelte --write ."
-	},
-	"peerDependencies": {
-		"svelte": "^4.0.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -56,6 +45,7 @@
 		"vitest": "^0.34.0"
 	},
 	"dependencies": {
+		"svelte": "^4.0.0",
 		"graph-image": "workspace:*"
 	},
 	"type": "module"
