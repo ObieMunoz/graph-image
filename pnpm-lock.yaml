@@ -24,11 +24,11 @@ importers:
         specifier: latest
         version: 1.10.16
 
-  apps/demo:
+  demo:
     dependencies:
       graph-image:
         specifier: workspace:*
-        version: link:../../packages/graph-image
+        version: link:../graph-image
       svelte:
         specifier: ^4.0.0
         version: 4.0.5
@@ -82,7 +82,7 @@ importers:
         specifier: ^0.34.0
         version: 0.34.6
 
-  packages/graph-image:
+  graph-image:
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^2.0.0
@@ -832,10 +832,6 @@ packages:
     resolution: {integrity: sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==}
     dev: true
 
-  /@types/semver@7.3.13:
-    resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
-    dev: true
-
   /@types/semver@7.5.4:
     resolution: {integrity: sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==}
     dev: true
@@ -954,7 +950,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.37.0)
       '@types/json-schema': 7.0.11
-      '@types/semver': 7.3.13
+      '@types/semver': 7.5.4
       '@typescript-eslint/scope-manager': 6.0.0
       '@typescript-eslint/types': 6.0.0
       '@typescript-eslint/typescript-estree': 6.0.0(typescript@5.0.3)
