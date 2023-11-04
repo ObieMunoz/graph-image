@@ -1,14 +1,6 @@
-import {
-	srcSet,
-	bgColor,
-	resizeImage,
-	compressAndWebp,
-	constructURL,
-	responsiveSizes,
-	getWidths,
-	imgSizes
-} from './_utils.js';
+import { bgColor, createFinalURL, inImageCache } from './_utils.js';
 import { describe, it, expect } from 'vitest';
+import type { GraphAsset, Watermark } from './types.js';
 
 describe('_utils.ts // Utility Functions', () => {
 	describe('bgColor', () => {
@@ -22,72 +14,169 @@ describe('_utils.ts // Utility Functions', () => {
 		});
 	});
 
-	describe('resizeImage', () => {
-		it('should return a formatted resize string', () => {
-			const result = resizeImage({ width: 100, height: 200, fit: 'cover' });
-			expect(result).toBe('resize=w:100,h:200,fit:cover');
-		});
-	});
-
-	describe('compressAndWebp', () => {
-		it('should add auto_image when webp is true', () => {
-			expect(compressAndWebp(true)).toBe('auto_image/compress');
-		});
-
-		it('should not add auto_image when webp is false', () => {
-			expect(compressAndWebp(false)).toBe('compress');
-		});
-	});
-
-	describe('constructURL', () => {
-		it('should construct a URL based on input parameters', () => {
-			const construct = constructURL('sampleHandle', true, 'http://example.com');
-			const resizeFunc = construct('resize_string');
-			const result = resizeFunc(['transform1', 'transform2']);
-			expect(result).toBe(
-				'http://example.com/resize_string/transform1/transform2/auto_image/compress/sampleHandle'
-			);
-		});
-	});
-
-	describe('responsiveSizes', () => {
-		it('should return an array of responsive sizes', () => {
-			const sizes = responsiveSizes(100);
-			expect(sizes).toEqual([25, 50, 100, 150, 200, 300]);
-		});
-	});
-
-	describe('getWidths', () => {
-		it('should return widths less than the provided width from responsiveSizes', () => {
-			const widths = getWidths(500, 400);
-			expect(widths).toEqual([100, 200, 400, 500]);
-		});
-	});
-
-	describe('srcSet', () => {
-		it('should generate a srcSet string based on provided parameters', () => {
-			const mockSrcBase = (resize: string) => (transforms: string[]) => {
-				return `http://example.com/${resize}/${transforms.join('/')}`;
+	describe('createFinalURL', () => {
+		it('should correctly generate final URL without any transformations', () => {
+			const image = {
+				handle: 'sampleHandle',
+				width: 1920,
+				height: 1080
 			};
-			const mockSrcWidths = [100, 200, 300];
-			const mockFit = 'cover';
-			const mockTransforms = ['transform1', 'transform2'];
 
-			const result = srcSet(mockSrcBase, mockSrcWidths, 300, mockFit, mockTransforms);
+			const result = createFinalURL(
+				image,
+				true,
+				'http://example.com',
+				500,
+				'crop',
+				undefined,
+				undefined,
+				undefined,
+				undefined
+			);
+			expect(result.finalSrc).toBe(
+				'http://example.com/resize=w:1920,h:1080,fit:crop/auto_image/compress/sampleHandle'
+			);
+			expect(result.thumbSrc).toBe(
+				'http://example.com/resize=w:20,h:20,fit:crop/blur=amount:2/compress/sampleHandle'
+			);
+			expect(result.sizes).toBe('(max-width: 500px) 100vw, 500px');
 
-			expect(result).toBe(
-				`http://example.com/resize=w:100,h:300,fit:cover/transform1/transform2 100w,\n` +
-					`http://example.com/resize=w:200,h:300,fit:cover/transform1/transform2 200w,\n` +
-					`http://example.com/resize=w:300,h:300,fit:cover/transform1/transform2 300w`
+			const expectedSrcSet =
+				'http://example.com/resize=w:125,h:1080,fit:crop/auto_image/compress/sampleHandle 125w,\n' +
+				'http://example.com/resize=w:250,h:1080,fit:crop/auto_image/compress/sampleHandle 250w,\n' +
+				'http://example.com/resize=w:500,h:1080,fit:crop/auto_image/compress/sampleHandle 500w,\n' +
+				'http://example.com/resize=w:750,h:1080,fit:crop/auto_image/compress/sampleHandle 750w,\n' +
+				'http://example.com/resize=w:1000,h:1080,fit:crop/auto_image/compress/sampleHandle 1000w,\n' +
+				'http://example.com/resize=w:1500,h:1080,fit:crop/auto_image/compress/sampleHandle 1500w,\n' +
+				'http://example.com/resize=w:1920,h:1080,fit:crop/auto_image/compress/sampleHandle 1920w';
+			expect(result.srcSetImgs).toBe(expectedSrcSet);
+		});
+
+		it('should apply quality transformation', () => {
+			const image = {
+				handle: 'sampleHandle',
+				width: 100,
+				height: 200
+			};
+			const result = createFinalURL(
+				image,
+				true,
+				'http://example.com',
+				500,
+				'crop',
+				90,
+				undefined,
+				undefined,
+				undefined
+			);
+			expect(result.finalSrc).toContain('quality=value:90');
+		});
+
+		it('should apply sharpen transformation', () => {
+			const image = {
+				handle: 'sampleHandle',
+				width: 100,
+				height: 200
+			};
+			const result = createFinalURL(
+				image,
+				true,
+				'http://example.com',
+				500,
+				'crop',
+				undefined,
+				10,
+				undefined,
+				undefined
+			);
+			expect(result.finalSrc).toContain('sharpen=amount:10');
+		});
+
+		it('should apply rotate transformation', () => {
+			const image = {
+				handle: 'sampleHandle',
+				width: 100,
+				height: 200
+			};
+			const result = createFinalURL(
+				image,
+				true,
+				'http://example.com',
+				500,
+				'crop',
+				undefined,
+				undefined,
+				90,
+				undefined
+			);
+			expect(result.finalSrc).toContain('rotate=deg:90');
+		});
+
+		it('should apply watermark transformation', () => {
+			const image = {
+				handle: 'sampleHandle',
+				width: 100,
+				height: 200
+			};
+			const watermark: Watermark = {
+				handle: 'watermarkHandle',
+				size: 30,
+				position: ['top', 'right']
+			};
+			const result = createFinalURL(
+				image,
+				true,
+				'http://example.com',
+				500,
+				'crop',
+				undefined,
+				undefined,
+				undefined,
+				watermark
+			);
+			expect(result.finalSrc).toContain(
+				'watermark=position:[top,right],file:watermarkHandle,size:30'
 			);
 		});
 	});
 
-	describe('imgSizes', () => {
-		it('should generate an imgSizes string based on maxWidth', () => {
-			const maxWidth = 500;
-			const result = imgSizes(maxWidth);
-			expect(result).toBe('(max-width: 500px) 100vw, 500px');
+	describe('inImageCache', () => {
+		it('should return false for an image not in cache', () => {
+			const image: GraphAsset = {
+				handle: 'sampleHandle1',
+				width: 100,
+				height: 100
+			};
+			expect(inImageCache(image, false)).toBe(false);
+		});
+
+		it('should add an image to cache when shouldCache is true', () => {
+			const image: GraphAsset = {
+				handle: 'sampleHandle2',
+				width: 100,
+				height: 100
+			};
+			expect(inImageCache(image, true)).toBe(false);
+		});
+
+		it('should return true for an image that is already in cache', () => {
+			const image: GraphAsset = {
+				handle: 'sampleHandle2',
+				width: 100,
+				height: 100
+			};
+			expect(inImageCache(image, false)).toBe(true);
+		});
+
+		it('should correctly cache an image through a sequence of operations', () => {
+			const image: GraphAsset = {
+				handle: 'sampleHandle3',
+				width: 100,
+				height: 100
+			};
+			expect(inImageCache(image, false)).toBe(false);
+			expect(inImageCache(image, true)).toBe(false);
+			expect(inImageCache(image, false)).toBe(true);
 		});
 	});
 });
