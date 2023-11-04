@@ -3,22 +3,29 @@
 	import { bgColor, createFinalURL, inImageCache, listenToIntersections } from './_utils.js';
 	import type { Fit, GraphAsset, Load, Watermark } from './types.ts';
 
-	export let image: GraphAsset;
-	export let maxWidth: number = 800;
-	export let fadeIn: boolean = true;
-	export let fit: Fit = 'crop';
-	export let withWebp: boolean = true;
-	export let title: string = '';
+	// --- General Properties ---
+	export let image: GraphAsset; // Required
 	export let alt: string = '';
-	export let style: Record<string, any> = {};
-	export let blurryPlaceholder: boolean = true;
-	export let backgroundColor: string | boolean = '';
 	export let baseURI: string = 'https://media.graphassets.com';
-	export let quality: number | undefined = undefined;
-	export let sharpen: number | undefined = undefined;
-	export let rotate: number | undefined = undefined;
-	export let watermark: Watermark | undefined = undefined;
+	export let title: string = '';
+
+	// --- Styling and Presentation ---
+	export let fit: Fit = 'crop';
+	export let maxWidth: number = 800;
+	export let style: Record<string, any> = {};
 	export let load: Load = 'lazy';
+
+	// --- Image Enhancements and Effects ---
+	export let backgroundColor: string | boolean = '';
+	export let blurryPlaceholder: boolean = true;
+	export let fadeIn: boolean = true;
+	export let quality: number | undefined = undefined;
+	export let rotate: number | undefined = undefined;
+	export let sharpen: number | undefined = undefined;
+	export let withWebp: boolean = true;
+
+	// --- Miscellaneous Features ---
+	export let watermark: Watermark | undefined = undefined;
 
 	let imageInnerWrapper: HTMLElement;
 	let imgLoaded = false;
