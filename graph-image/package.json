@@ -20,7 +20,7 @@
 	"bugs": {
 		"url": "https://github.com/ObieMunoz/graph-image/issues"
 	},
-	"homepage": "https://graph-image.obiemunoz.com",
+	"homepage": "https://github.com/ObieMunoz/graph-image#readme",
 	"scripts": {
 		"build": "vite build && npm run package",
 		"gh-build": "vite build && npm run package",
