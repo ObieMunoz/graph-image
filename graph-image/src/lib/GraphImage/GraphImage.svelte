@@ -4,7 +4,7 @@
 	import type { Fit, GraphAsset, Load, Watermark } from './types.ts';
 
 	export let image: GraphAsset;
-	export let maxWidth: number = 800;
+	export let maxWidth: number | undefined = undefined;
 	export let fadeIn: boolean = true;
 	export let fit: Fit = 'crop';
 	export let withWebp: boolean = true;
@@ -41,7 +41,7 @@
 		image,
 		withWebp,
 		baseURI,
-		maxWidth,
+		maxWidth ?? image.width,
 		fit,
 		quality,
 		sharpen,
@@ -75,7 +75,14 @@
 		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%" />
 
 		{#if blurryPlaceholder && load == 'lazy'}
-			<Image {alt} {title} src={imageData.thumbSrc} {load} />
+			<Image
+				{alt}
+				{title}
+				src={imageData.thumbSrc}
+				{load}
+				width={image.width}
+				height={image.height}
+			/>
 		{/if}
 
 		{#if backgroundColor}
@@ -95,6 +102,8 @@
 				opacity={fadeIn ? 0 : 1}
 				sizes={imageData.sizes}
 				{load}
+				width={image.width}
+				height={image.height}
 				on:imageLoad={onImageLoaded}
 			/>
 		{/if}

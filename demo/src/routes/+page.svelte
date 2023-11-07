@@ -57,7 +57,7 @@
 			<GraphImage
 				title="Sample"
 				alt="Sample"
-				image={{ ...image, width: 3840, height: 2160 }}
+				image={{ ...image, width: 590, height: 331 }}
 				fit="clip"
 				withWebp
 				maxWidth={1200}
@@ -154,10 +154,6 @@
 		border-top: 1px solid #333;
 		padding-top: 1rem;
 		color: #a9a9a9;
-	}
-
-	.banner {
-		max-height: 360px;
 	}
 
 	.gallery {

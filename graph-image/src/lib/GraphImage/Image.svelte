@@ -5,6 +5,11 @@
 	const dispatch = createEventDispatcher();
 	export let src: string;
 	export let alt: string;
+	export let height: number;
+	export let width: number;
+	export let srcset: string | undefined = undefined;
+	export let sizes: string | undefined = undefined;
+	export let title: string | undefined = undefined;
 	export let opacity: 0 | 1 = 0;
 	export let transitionDelay: string = '0.25s';
 	export let transition: string = 'opacity 0.5s';
@@ -19,30 +24,21 @@
 
 		dispatch('imageLoad');
 	}
+
+	$: style = `max-width: ${width}px; max-height: ${height}px; ${
+		load === 'eager'
+			? ''
+			: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`
+	}`;
 </script>
 
 <svelte:head>
 	{#if load === 'eager'}
-		<link
-			rel="preload"
-			as="image"
-			href={src}
-			imagesrcset={$$props?.srcset}
-			imagesizes={$$props?.sizes}
-		/>
+		<link rel="preload" as="image" href={src} imagesrcset={srcset} imagesizes={sizes} />
 	{/if}
 </svelte:head>
 
-<img
-	{...$$props}
-	{id}
-	{src}
-	{alt}
-	style={load === 'eager'
-		? ''
-		: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`}
-	on:load={handleLoading}
-/>
+<img {id} {src} {srcset} {sizes} {alt} {style} {title} on:load={handleLoading} />
 
 <style>
 	img {
@@ -50,7 +46,6 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100%;
 		object-fit: cover;
 		object-position: center;
 	}

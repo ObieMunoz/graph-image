@@ -112,7 +112,7 @@ export function srcSet(
 }
 
 export function imgSizes(maxWidth: number): string {
-	return `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`;
+	return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
 }
 
 export function createWatermarkTransformation(watermark: Watermark): string {

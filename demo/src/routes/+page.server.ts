@@ -50,8 +50,8 @@ export const load: PageServerLoad = async () => {
 	];
 	let logo: GraphImageTypes.GraphAsset = {
 		handle: 'fONBVATVKYm2eBRtzA76',
-		height: 510,
-		width: 1603
+		height: 400,
+		width: 1200
 	};
 
 	try {
