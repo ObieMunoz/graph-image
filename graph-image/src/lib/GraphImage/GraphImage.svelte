@@ -7,7 +7,7 @@
 	export let alt: string = '';
 	export let baseURI: string = 'https://media.graphassets.com';
 	export let title: string = '';
-	
+
 	// --- Styling and Presentation ---
 	export let fit: Fit = 'crop';
 	export let maxWidth: number | undefined = undefined;

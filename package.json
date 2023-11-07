@@ -5,6 +5,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "turbo run format",
+    "test": "turbo run test",
     "publish-packages": "turbo run build && turbo run test && changeset version && changeset publish"
   },
   "devDependencies": {
