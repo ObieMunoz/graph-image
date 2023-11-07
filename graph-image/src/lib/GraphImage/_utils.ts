@@ -111,8 +111,8 @@ function srcSet(
 		.join(',\n');
 }
 
-function imgSizes(maxWidth: number): string {
-	return `(max-width: ${maxWidth}px) 100vw, ${maxWidth}px`;
+export function imgSizes(maxWidth: number): string {
+	return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
 }
 
 function createWatermarkTransformation(watermark: Watermark): string {

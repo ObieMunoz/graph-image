@@ -5,11 +5,5 @@
 </script>
 
 <div class="banner">
-	<GraphImage image={logo} fit="clip" load="eager" />
+	<GraphImage image={{ ...logo, width: 1200, height: 400 }} fit="clip" load="eager" />
 </div>
-
-<style>
-	.banner {
-		max-height: 360px;
-	}
-</style>

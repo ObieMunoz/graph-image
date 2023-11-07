@@ -39,7 +39,7 @@ describe('_utils.ts // Utility Functions', () => {
 			expect(result.thumbSrc).toBe(
 				'http://example.com/resize=w:20,h:20,fit:crop/blur=amount:2/compress/sampleHandle'
 			);
-			expect(result.sizes).toBe('(max-width: 500px) 100vw, 500px');
+			expect(result.sizes).toBe('(min-width: 500px) 500px, 100vw');
 
 			const expectedSrcSet =
 				'http://example.com/resize=w:125,h:1080,fit:crop/auto_image/compress/sampleHandle 125w,\n' +
