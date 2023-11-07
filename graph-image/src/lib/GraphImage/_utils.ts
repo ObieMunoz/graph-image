@@ -11,10 +11,10 @@ import type {
 } from './types.js';
 
 const imageCache = writable<ImageCacheType>({});
-let io: IntersectionObserver | undefined;
 const listeners: [Element, () => void][] = [];
+let io: IntersectionObserver | undefined;
 
-export function inImageCache(image: GraphAsset, shouldCache: boolean): boolean {
+function inImageCache(image: GraphAsset, shouldCache: boolean): boolean {
 	const cache = get(imageCache);
 
 	if (cache[image.handle]) {
@@ -59,24 +59,24 @@ function getIO(): IntersectionObserver {
 	return io;
 }
 
-export function listenToIntersections(element: Element, callback: () => void): void {
+function listenToIntersections(element: Element, callback: () => void): void {
 	getIO().observe(element);
 	listeners.push([element, callback]);
 }
 
-export function bgColor(backgroundColor: string | boolean): string {
+function bgColor(backgroundColor: string | boolean): string {
 	return typeof backgroundColor === 'boolean' ? 'lightgray' : backgroundColor;
 }
 
-export function resizeImage({ width, height, fit }: ResizeParams): string {
+function resizeImage({ width, height, fit }: ResizeParams): string {
 	return `resize=w:${width},h:${height},fit:${fit}`;
 }
 
-export function compressAndWebp(webp: boolean): string {
+function compressAndWebp(webp: boolean): string {
 	return `${webp ? 'auto_image/' : ''}compress`;
 }
 
-export function constructURL(handle: string, withWebp: boolean, baseURI: string): ResizeFunction {
+function constructURL(handle: string, withWebp: boolean, baseURI: string): ResizeFunction {
 	return function (resize: string): TransformFunction {
 		return function (transforms: string[]): string {
 			return [baseURI, resize, ...transforms, compressAndWebp(withWebp), handle].join('/');
@@ -84,18 +84,18 @@ export function constructURL(handle: string, withWebp: boolean, baseURI: string)
 	};
 }
 
-export function responsiveSizes(size: number): number[] {
+function responsiveSizes(size: number): number[] {
 	return [size / 4, size / 2, size, size * 1.5, size * 2, size * 3];
 }
 
-export function getWidths(width: number, maxWidth: number): number[] {
+function getWidths(width: number, maxWidth: number): number[] {
 	const sizes = responsiveSizes(maxWidth).filter((size) => size < width);
 	// Add the original width to ensure the largest image possible is available for small images.
 	const finalSizes = [...sizes, width];
 	return finalSizes;
 }
 
-export function srcSet(
+function srcSet(
 	srcBase: (resize: string) => (transforms: string[]) => string,
 	srcWidths: number[],
 	height: number,
@@ -115,7 +115,7 @@ export function imgSizes(maxWidth: number): string {
 	return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
 }
 
-export function createWatermarkTransformation(watermark: Watermark): string {
+function createWatermarkTransformation(watermark: Watermark): string {
 	const { handle, size, position } = watermark;
 
 	const defaultVertical = 'middle';
@@ -138,7 +138,7 @@ export function createWatermarkTransformation(watermark: Watermark): string {
 	return `watermark=position:[${positionStr}],file:${handle}${sizeStr}`;
 }
 
-export function createFinalURL(
+function createFinalURL(
 	image: GraphAsset,
 	withWebp: boolean,
 	baseURI: string,
@@ -198,3 +198,5 @@ function createTransformations(
 
 	return transforms;
 }
+
+export { bgColor, createFinalURL, inImageCache, listenToIntersections };
