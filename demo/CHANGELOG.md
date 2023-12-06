@@ -1,5 +1,13 @@
 # graph-image-demo
 
+## 0.1.2
+
+### Patch Changes
+
+- fa77847: Bump package versions
+- Updated dependencies [fa77847]
+  - graph-image@0.2.1
+
 ## 0.1.1
 
 ### Patch Changes

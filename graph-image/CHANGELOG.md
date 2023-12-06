@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.2.1
+
+### Patch Changes
+
+- fa77847: Bump package versions
+
 ## 0.2.0
 
 ### Minor Changes
