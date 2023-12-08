@@ -154,7 +154,7 @@ function createFinalURL(
 	const thumbBase = constructURL(image.handle, false, baseURI);
 	const sizedSrc = srcBase(resizeImage({ width: image.width, height: image.height, fit }));
 	const finalSrc = sizedSrc(transforms);
-	const thumbSize = { width: 20, height: 20, fit: 'crop' };
+	const thumbSize = { width: 20, height: 20, fit: fit };
 	const thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
 	const srcSetImgs = srcSet(
 		srcBase,
