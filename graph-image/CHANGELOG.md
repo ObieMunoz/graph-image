@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.2.2
+
+### Patch Changes
+
+- e2ad668: Fixed placeholder loading state
+
 ## 0.2.1
 
 ### Patch Changes
