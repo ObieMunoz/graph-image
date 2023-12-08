@@ -88,6 +88,9 @@
 				{load}
 				width={image.width}
 				height={image.height}
+				opacity={imgLoaded ? 1 : 0}
+				transition=""
+				transitionDelay=""
 			/>
 		{/if}
 
