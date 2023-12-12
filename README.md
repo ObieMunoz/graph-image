@@ -14,7 +14,7 @@ Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph
 
 # Graph Image Turborepo
 
-This Turborepo includes the `graph-image` npmjs package and the `demo` application.
+This Turborepo includes the [graph-image](https://github.com/ObieMunoz/graph-image/blob/main/graph-image/README.md) npmjs package and the [demo](https://github.com/ObieMunoz/graph-image/blob/main/demo/README.md) application.
 
 ## Build
 
