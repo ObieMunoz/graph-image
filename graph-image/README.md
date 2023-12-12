@@ -1,4 +1,4 @@
-![Graph Image](../demo/static/graph-image.png)
+![Graph Image](./graph-image.png)
 
 # graph-image
 
@@ -59,7 +59,7 @@ Here's an example using a static asset object.
 | `image`             | `object`                         | An object of shape `{ handle, width, height }`. Handle is an identifier required to display the image and both `width` and `height` are required to display a correct placeholder and aspect ratio for the image. You can get all 3 by just putting all 3 in your image-getting query. |
 | `maxWidth`          | `number`                         | Maximum width you'd like your image to take up. (ex. If your image container is resizing dynamically up to a width of 1200, put it as a `maxWidth`) |
 | `fadeIn`            | `bool`                           | Do you want your image to fade in on load? Defaults to `true` |
-| `fit`               | `"clip"\|"crop"\|"scale"\|"max"` | When resizing the image, how would you like it to fit the new dimensions? Defaults to `crop`. You can read more about resizing [here](https://www.filestack.com/docs/api/processing/#resize) |
+| `fit`               | `"clip"\|"crop"\|"scale"\|"max"\|"center-contain" (Experimental)` | When resizing the image, how would you like it to fit the new dimensions? Defaults to `crop`. You can read more about resizing [here](https://www.filestack.com/docs/api/processing/#resize). "center-contain" is experimental and will use 'clip' for the purposes for resizing. |
 | `withWebp`          | `bool`                           | If webp is supported by the browser, the images will be served with `.webp` extension. (Recommended) |
 | `title`             | `string`                         | Passed to the `img` element |
 | `alt`               | `string`                         | Passed to the `img` element |
