@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.2.3
+
+### Patch Changes
+
+- 9972675: Added experimental fit option: center-contain
+
 ## 0.2.2
 
 ### Patch Changes

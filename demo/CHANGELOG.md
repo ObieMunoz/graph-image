@@ -1,5 +1,12 @@
 # graph-image-demo
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [9972675]
+  - graph-image@0.2.3
+
 ## 0.1.3
 
 ### Patch Changes
