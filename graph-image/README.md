@@ -1,4 +1,4 @@
-![Graph Image](./graph-image.png)
+![Graph Image](https://media.graphassets.com/auto_image/compress/fONBVATVKYm2eBRtzA76)
 
 # graph-image
 
