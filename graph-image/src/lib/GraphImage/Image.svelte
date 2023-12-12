@@ -14,6 +14,7 @@
 	export let transitionDelay: string = '0.25s';
 	export let transition: string = 'opacity 0.5s';
 	export let load: Load = 'lazy';
+	export let thumb: boolean = false;
 
 	let id = crypto.randomUUID().slice(0, 8);
 
@@ -28,7 +29,7 @@
 	$: style = `max-width: ${width}px; max-height: ${height}px; ${
 		load === 'eager'
 			? ''
-			: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${opacity};`
+			: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${thumb ? 1 : opacity};`
 	}`;
 </script>
 
