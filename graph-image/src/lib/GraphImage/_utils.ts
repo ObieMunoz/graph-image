@@ -69,7 +69,7 @@ function bgColor(backgroundColor: string | boolean): string {
 }
 
 function resizeImage({ width, height, fit }: ResizeParams): string {
-	return `resize=w:${width},h:${height},fit:${fit}`;
+	return `resize=w:${width},h:${height},fit:${fit == 'center-contain' ? 'clip' : fit}`;
 }
 
 function compressAndWebp(webp: boolean): string {
@@ -104,7 +104,7 @@ function srcSet(
 ): string {
 	return srcWidths
 		.map((width) => {
-			const resizeOption = `resize=w:${Math.floor(width)},h:${Math.floor(height)},fit:${fit}`;
+			const resizeOption = `resize=w:${Math.floor(width)},h:${Math.floor(height)},fit:${fit == 'center-contain' ? 'clip' : fit}`;
 			const src = srcBase(resizeOption)(transforms);
 			return `${src} ${Math.floor(width)}w`;
 		})

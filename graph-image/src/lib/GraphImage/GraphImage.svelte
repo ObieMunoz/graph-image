@@ -113,6 +113,7 @@
 				{load}
 				width={image.width}
 				height={image.height}
+				center={fit === 'center-contain'}
 				on:imageLoad={onImageLoaded}
 			/>
 		{/if}

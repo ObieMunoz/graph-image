@@ -15,6 +15,7 @@
 	export let transition: string = 'opacity 0.5s';
 	export let load: Load = 'lazy';
 	export let thumb: boolean = false;
+	export let center: boolean = false;
 
 	let id = crypto.randomUUID().slice(0, 8);
 
@@ -30,7 +31,7 @@
 		load === 'eager'
 			? ''
 			: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity: ${thumb ? 1 : opacity};`
-	}`;
+	} ${center ? `aspect-ratio: ${width} / ${height}; object-fit: contain !important;` : ``}`;
 </script>
 
 <svelte:head>
