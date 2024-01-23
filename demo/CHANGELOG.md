@@ -1,5 +1,13 @@
 # graph-image-demo
 
+## 0.1.5
+
+### Patch Changes
+
+- 15122ff: Security patch - Vite vulnerability
+- Updated dependencies [15122ff]
+  - graph-image@0.2.4
+
 ## 0.1.4
 
 ### Patch Changes

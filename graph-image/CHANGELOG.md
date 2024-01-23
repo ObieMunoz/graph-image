@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.2.4
+
+### Patch Changes
+
+- 15122ff: Security patch - Vite vulnerability
+
 ## 0.2.3
 
 ### Patch Changes
