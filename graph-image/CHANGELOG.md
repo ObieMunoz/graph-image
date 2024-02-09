@@ -1,5 +1,12 @@
 # graph-image
 
+## 0.3.0
+
+### Minor Changes
+
+- 4d0bb97: - Default blurryPlaceholder prop to false
+  - Added `Source` and `Image` components for [art-direction use case](https://web.dev/articles/codelab-art-direction)
+
 ## 0.2.4
 
 ### Patch Changes
