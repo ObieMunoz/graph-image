@@ -117,12 +117,6 @@ export function imgSizes(maxWidth: number): string {
 	return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
 }
 
-export function calculateThumbSize(handle: string, baseURI: string) {
-	const thumbBase = constructURL(handle, false, baseURI);
-	const thumbSize = { width: 20, height: 20, fit: 'crop' };
-	return thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
-}
-
 function createWatermarkTransformation(watermark: Watermark): string {
 	const { handle, size, position } = watermark;
 
@@ -155,9 +149,10 @@ function createFinalURL(
 	quality: number | undefined = undefined,
 	sharpen: number | undefined = undefined,
 	rotate: number | undefined = undefined,
+	blur: number | undefined = undefined,
 	watermark: Watermark | undefined = undefined
 ) {
-	const transforms = createTransformations(quality, sharpen, rotate, watermark);
+	const transforms = createTransformations(quality, sharpen, rotate, blur, watermark);
 	const srcBase = constructURL(image.handle, withWebp, baseURI);
 
 	const sizedSrc = srcBase(resizeImage({ width: image.width, height: image.height, fit }));
@@ -176,6 +171,7 @@ function createTransformations(
 	quality: number | undefined,
 	sharpen: number | undefined,
 	rotate: number | undefined,
+	blur: number | undefined,
 	watermark: Watermark | undefined
 ) {
 	const transforms = [];
@@ -186,6 +182,10 @@ function createTransformations(
 
 	if (sharpen && sharpen <= 20) {
 		transforms.push(`sharpen=amount:${sharpen}`);
+	}
+
+	if (blur && blur > 0 && blur <= 100) {
+		transforms.push(`blur=amount:${blur}`);
 	}
 
 	if (rotate && rotate > 0 && rotate < 360) {

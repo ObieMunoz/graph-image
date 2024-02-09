@@ -25,6 +25,8 @@
 	export let quality: number | undefined = undefined;
 	export let rotate: number | undefined = undefined;
 	export let sharpen: number | undefined = undefined;
+	export let blur: number | undefined = undefined;
+
 	export let withWebp: boolean = true;
 	// --- Miscellaneous Features ---
 	export let watermark: Watermark | undefined = undefined;
@@ -50,6 +52,7 @@
 		quality,
 		sharpen,
 		rotate,
+		blur,
 		watermark
 	));
 </script>

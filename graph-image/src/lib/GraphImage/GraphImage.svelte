@@ -80,6 +80,7 @@
 				width={20}
 				height={20}
 				opacity={1}
+				blur={2}
 				absolute
 			/>
 		{/if}

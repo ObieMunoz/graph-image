@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Fit } from './types.js';
+	import type { Fit, Watermark } from './types.js';
 	import { createFinalURL } from './_utils.js';
 
 	export let handle: string;
@@ -16,7 +16,10 @@
 	export let quality: number | undefined = undefined;
 	export let rotate: number | undefined = undefined;
 	export let sharpen: number | undefined = undefined;
+	export let blur: number | undefined = undefined;
 	export let withWebp: boolean = true;
+	// --- Miscellaneous Features ---
+	export let watermark: Watermark | undefined = undefined;
 
 	$: ({ sizes, srcset, src } = createFinalURL(
 		{ width, height, handle },
@@ -26,7 +29,9 @@
 		fit,
 		quality,
 		sharpen,
-		rotate
+		rotate,
+		blur,
+		watermark
 	));
 </script>
 
