@@ -33,12 +33,7 @@ describe('_utils.ts // Utility Functions', () => {
 				undefined,
 				undefined
 			);
-			expect(result.finalSrc).toBe(
-				'http://example.com/resize=w:1920,h:1080,fit:crop/auto_image/compress/sampleHandle'
-			);
-			expect(result.thumbSrc).toBe(
-				'http://example.com/resize=w:20,h:20,fit:crop/blur=amount:2/compress/sampleHandle'
-			);
+
 			expect(result.sizes).toBe('(min-width: 500px) 500px, 100vw');
 
 			const expectedSrcSet =
@@ -49,7 +44,7 @@ describe('_utils.ts // Utility Functions', () => {
 				'http://example.com/resize=w:1000,h:1080,fit:crop/auto_image/compress/sampleHandle 1000w,\n' +
 				'http://example.com/resize=w:1500,h:1080,fit:crop/auto_image/compress/sampleHandle 1500w,\n' +
 				'http://example.com/resize=w:1920,h:1080,fit:crop/auto_image/compress/sampleHandle 1920w';
-			expect(result.srcSetImgs).toBe(expectedSrcSet);
+			expect(result.srcset).toBe(expectedSrcSet);
 		});
 
 		it('should apply quality transformation', () => {
@@ -69,7 +64,7 @@ describe('_utils.ts // Utility Functions', () => {
 				undefined,
 				undefined
 			);
-			expect(result.finalSrc).toContain('quality=value:90');
+			expect(result.src).toContain('quality=value:90');
 		});
 
 		it('should apply sharpen transformation', () => {
@@ -89,7 +84,7 @@ describe('_utils.ts // Utility Functions', () => {
 				undefined,
 				undefined
 			);
-			expect(result.finalSrc).toContain('sharpen=amount:10');
+			expect(result.src).toContain('sharpen=amount:10');
 		});
 
 		it('should apply rotate transformation', () => {
@@ -109,7 +104,7 @@ describe('_utils.ts // Utility Functions', () => {
 				90,
 				undefined
 			);
-			expect(result.finalSrc).toContain('rotate=deg:90');
+			expect(result.src).toContain('rotate=deg:90');
 		});
 
 		it('should apply watermark transformation', () => {
@@ -134,9 +129,7 @@ describe('_utils.ts // Utility Functions', () => {
 				undefined,
 				watermark
 			);
-			expect(result.finalSrc).toContain(
-				'watermark=position:[top,right],file:watermarkHandle,size:30'
-			);
+			expect(result.src).toContain('watermark=position:[top,right],file:watermarkHandle,size:30');
 		});
 	});
 

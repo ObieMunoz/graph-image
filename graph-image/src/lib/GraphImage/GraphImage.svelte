@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Image from './Image.svelte';
-	import { bgColor, createFinalURL, inImageCache, listenToIntersections } from './_utils.js';
+	import { bgColor, inImageCache, listenToIntersections } from './_utils.js';
 	import type { Fit, GraphAsset, Load, Watermark } from './types.ts';
 
 	export let image: GraphAsset;
@@ -16,7 +16,7 @@
 
 	// --- Image Enhancements and Effects ---
 	export let backgroundColor: string | boolean = '';
-	export let blurryPlaceholder: boolean = true;
+	export let blurryPlaceholder: boolean = false;
 	export let fadeIn: boolean = true;
 	export let quality: number | undefined = undefined;
 	export let rotate: number | undefined = undefined;
@@ -43,17 +43,6 @@
 	$: styleString = Object.entries(style)
 		.map(([key, value]) => `${key}: ${value};`)
 		.join('');
-	$: imageData = createFinalURL(
-		image,
-		withWebp,
-		baseURI,
-		maxWidth ?? image.width,
-		fit,
-		quality,
-		sharpen,
-		rotate,
-		watermark
-	);
 
 	$: if (imageInnerWrapper && IOSupported) {
 		listenToIntersections(imageInnerWrapper, () => {
@@ -84,13 +73,14 @@
 			<Image
 				{alt}
 				{title}
-				src={imageData.thumbSrc}
-				{load}
-				width={image.width}
-				height={image.height}
-				transition="none"
-				transitionDelay="0ms"
-				thumb
+				{baseURI}
+				handle={image.handle}
+				load="eager"
+				fit="crop"
+				width={20}
+				height={20}
+				opacity={1}
+				absolute
 			/>
 		{/if}
 
@@ -106,15 +96,22 @@
 			<Image
 				{alt}
 				{title}
-				srcset={imageData.srcSetImgs}
-				src={imageData.finalSrc}
-				opacity={fadeIn ? 0 : 1}
-				sizes={imageData.sizes}
+				handle={image.handle}
 				{load}
+				{baseURI}
+				{maxWidth}
+				{fit}
+				{quality}
+				{rotate}
+				{sharpen}
+				{withWebp}
+				{watermark}
+				opacity={fadeIn ? 0 : 1}
 				width={image.width}
 				height={image.height}
 				center={fit === 'center-contain'}
-				on:imageLoad={onImageLoaded}
+				absolute
+				on:load={onImageLoaded}
 			/>
 		{/if}
 	</div>

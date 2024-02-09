@@ -104,7 +104,9 @@ function srcSet(
 ): string {
 	return srcWidths
 		.map((width) => {
-			const resizeOption = `resize=w:${Math.floor(width)},h:${Math.floor(height)},fit:${fit == 'center-contain' ? 'clip' : fit}`;
+			const resizeOption = `resize=w:${Math.floor(width)},h:${Math.floor(height)},fit:${
+				fit == 'center-contain' ? 'clip' : fit
+			}`;
 			const src = srcBase(resizeOption)(transforms);
 			return `${src} ${Math.floor(width)}w`;
 		})
@@ -113,6 +115,12 @@ function srcSet(
 
 export function imgSizes(maxWidth: number): string {
 	return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
+}
+
+export function calculateThumbSize(handle: string, baseURI: string) {
+	const thumbBase = constructURL(handle, false, baseURI);
+	const thumbSize = { width: 20, height: 20, fit: 'crop' };
+	return thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
 }
 
 function createWatermarkTransformation(watermark: Watermark): string {
@@ -144,30 +152,22 @@ function createFinalURL(
 	baseURI: string,
 	maxWidth: number,
 	fit: Fit,
-	quality: number | undefined,
-	sharpen: number | undefined,
-	rotate: number | undefined,
-	watermark: Watermark | undefined
+	quality: number | undefined = undefined,
+	sharpen: number | undefined = undefined,
+	rotate: number | undefined = undefined,
+	watermark: Watermark | undefined = undefined
 ) {
 	const transforms = createTransformations(quality, sharpen, rotate, watermark);
 	const srcBase = constructURL(image.handle, withWebp, baseURI);
-	const thumbBase = constructURL(image.handle, false, baseURI);
+
 	const sizedSrc = srcBase(resizeImage({ width: image.width, height: image.height, fit }));
-	const finalSrc = sizedSrc(transforms);
-	const thumbSize = { width: 20, height: 20, fit: 'crop' };
-	const thumbSrc = thumbBase(resizeImage(thumbSize))(['blur=amount:2']);
-	const srcSetImgs = srcSet(
-		srcBase,
-		getWidths(image.width, maxWidth),
-		image.height,
-		fit,
-		transforms
-	);
+	const src = sizedSrc(transforms);
+
+	const srcset = srcSet(srcBase, getWidths(image.width, maxWidth), image.height, fit, transforms);
 	const sizes = imgSizes(maxWidth);
 	return {
-		finalSrc,
-		thumbSrc,
-		srcSetImgs,
+		src,
+		srcset,
 		sizes
 	};
 }

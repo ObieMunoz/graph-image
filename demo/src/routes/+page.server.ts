@@ -5,13 +5,15 @@ import { GraphQLClient, gql } from 'graphql-request';
 import { parse } from 'graphql';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
-const client = new GraphQLClient(HYGRAPH_URL, {
-	headers: {
-		Authorization: `Bearer ${HYGRAPH_TOKEN}`
-	}
-});
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({fetch}) => {
+	const client = new GraphQLClient(HYGRAPH_URL, {
+		headers: {
+			Authorization: `Bearer ${HYGRAPH_TOKEN}`
+		},
+		fetch
+	});
+	
 	const query: TypedDocumentNode<
 		{
 			pageTextContent: { features: Array<string>; headline: string };
