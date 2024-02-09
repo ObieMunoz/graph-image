@@ -127,6 +127,7 @@ describe('_utils.ts // Utility Functions', () => {
 				undefined,
 				undefined,
 				undefined,
+				undefined,
 				watermark
 			);
 			expect(result.src).toContain('watermark=position:[top,right],file:watermarkHandle,size:30');
