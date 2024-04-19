@@ -1,5 +1,11 @@
 # graph-image
 
+## 0.3.1
+
+### Patch Changes
+
+- 8e20f50: Add maxHeight prop
+
 ## 0.3.0
 
 ### Minor Changes
