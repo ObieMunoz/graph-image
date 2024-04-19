@@ -18,6 +18,7 @@
 	// --- Styling and Presentation ---
 	export let fit: Fit = 'crop';
 	export let maxWidth: number | undefined = undefined;
+	export let maxHeight: number | undefined = undefined;
 	export let load: Load = 'lazy';
 	export let absolute = false;
 
@@ -44,7 +45,7 @@
 	} ${center ? `aspect-ratio: ${width} / ${height}; object-fit: contain !important;` : ``}`;
 
 	$: ({ sizes, srcset, src } = createFinalURL(
-		{ width, height, handle },
+		{ width, height: maxHeight ?? height, handle },
 		withWebp,
 		baseURI,
 		maxWidth ?? width,
