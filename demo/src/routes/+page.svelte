@@ -4,7 +4,11 @@
 	import { GraphImage } from 'graph-image';
 	import type { PageData } from './$types.js';
 
-	export let data: PageData;
+	interface Props {
+		data: PageData;
+	}
+
+	let { data }: Props = $props();
 
 	const logo = data.logo;
 	const headline = data.headline;
