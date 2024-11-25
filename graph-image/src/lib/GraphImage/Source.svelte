@@ -2,26 +2,47 @@
 	import type { Fit, Watermark } from './types.js';
 	import { createFinalURL } from './_utils.js';
 
-	export let handle: string;
-	export let height: number;
-	export let width: number;
-	export let media: string;
-	export let preloadMedia: string | undefined = undefined;
-	export let maxWidth: number | undefined = undefined;
-	export let baseURI: string = 'https://media.graphassets.com';
 
-	// --- Styling and Presentation ---
-	export let fit: Fit = 'crop';
+	
 
-	export let quality: number | undefined = undefined;
-	export let rotate: number | undefined = undefined;
-	export let sharpen: number | undefined = undefined;
-	export let blur: number | undefined = undefined;
-	export let withWebp: boolean = true;
-	// --- Miscellaneous Features ---
-	export let watermark: Watermark | undefined = undefined;
+	
+	interface Props {
+		handle: string;
+		height: number;
+		width: number;
+		media: string;
+		preloadMedia?: string | undefined;
+		maxWidth?: number | undefined;
+		baseURI?: string;
+		// --- Styling and Presentation ---
+		fit?: Fit;
+		quality?: number | undefined;
+		rotate?: number | undefined;
+		sharpen?: number | undefined;
+		blur?: number | undefined;
+		withWebp?: boolean;
+		// --- Miscellaneous Features ---
+		watermark?: Watermark | undefined;
+	}
 
-	$: ({ sizes, srcset, src } = createFinalURL(
+	let {
+		handle,
+		height,
+		width,
+		media,
+		preloadMedia = undefined,
+		maxWidth = undefined,
+		baseURI = 'https://media.graphassets.com',
+		fit = 'crop',
+		quality = undefined,
+		rotate = undefined,
+		sharpen = undefined,
+		blur = undefined,
+		withWebp = true,
+		watermark = undefined
+	}: Props = $props();
+
+	let { sizes, srcset, src } = $derived(createFinalURL(
 		{ width, height, handle },
 		withWebp,
 		baseURI,

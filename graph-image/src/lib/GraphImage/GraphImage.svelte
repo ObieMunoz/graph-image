@@ -1,35 +1,61 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import Image from './Image.svelte';
 	import { bgColor, inImageCache, listenToIntersections } from './_utils.js';
 	import type { Fit, GraphAsset, Load, Watermark } from './types.ts';
 
-	export let image: GraphAsset;
-	export let alt: string = '';
-	export let baseURI: string = 'https://media.graphassets.com';
-	export let title: string = '';
 
-	// --- Styling and Presentation ---
-	export let fit: Fit = 'crop';
-	export let maxWidth: number | undefined = undefined;
-	export let style: Record<string, any> = {};
-	export let load: Load = 'lazy';
+	
 
-	// --- Image Enhancements and Effects ---
-	export let backgroundColor: string | boolean = '';
-	export let blurryPlaceholder: boolean = false;
-	export let fadeIn: boolean = true;
-	export let quality: number | undefined = undefined;
-	export let rotate: number | undefined = undefined;
-	export let sharpen: number | undefined = undefined;
-	export let withWebp: boolean = true;
+	
 
-	// --- Miscellaneous Features ---
-	export let watermark: Watermark | undefined = undefined;
+	
+	interface Props {
+		image: GraphAsset;
+		alt?: string;
+		baseURI?: string;
+		title?: string;
+		// --- Styling and Presentation ---
+		fit?: Fit;
+		maxWidth?: number | undefined;
+		style?: Record<string, any>;
+		load?: Load;
+		// --- Image Enhancements and Effects ---
+		backgroundColor?: string | boolean;
+		blurryPlaceholder?: boolean;
+		fadeIn?: boolean;
+		quality?: number | undefined;
+		rotate?: number | undefined;
+		sharpen?: number | undefined;
+		withWebp?: boolean;
+		// --- Miscellaneous Features ---
+		watermark?: Watermark | undefined;
+	}
 
-	let imageInnerWrapper: HTMLElement;
-	let imgLoaded = false;
+	let {
+		image,
+		alt = '',
+		baseURI = 'https://media.graphassets.com',
+		title = '',
+		fit = 'crop',
+		maxWidth = undefined,
+		style = {},
+		load = 'lazy',
+		backgroundColor = '',
+		blurryPlaceholder = false,
+		fadeIn = true,
+		quality = undefined,
+		rotate = undefined,
+		sharpen = undefined,
+		withWebp = true,
+		watermark = undefined
+	}: Props = $props();
+
+	let imageInnerWrapper: HTMLElement = $state();
+	let imgLoaded = $state(false);
 	let IOSupported = typeof window !== 'undefined' && typeof IntersectionObserver !== 'undefined';
-	let isVisible = false;
+	let isVisible = $state(false);
 
 	function onImageLoaded() {
 		if (IOSupported) {
@@ -38,26 +64,30 @@
 		}
 	}
 
-	$: seenBefore = inImageCache(image, false);
+	let seenBefore = $derived(inImageCache(image, false));
 	// convert style Record<string, any> = {} to a style string
-	$: styleString = Object.entries(style)
+	let styleString = $derived(Object.entries(style)
 		.map(([key, value]) => `${key}: ${value};`)
-		.join('');
+		.join(''));
 
-	$: if (imageInnerWrapper && IOSupported) {
-		listenToIntersections(imageInnerWrapper, () => {
-			isVisible = true;
+	run(() => {
+		if (imageInnerWrapper && IOSupported) {
+			listenToIntersections(imageInnerWrapper, () => {
+				isVisible = true;
+				imgLoaded = false;
+			});
+		}
+	});
+
+	run(() => {
+		if (!seenBefore && IOSupported) {
+			isVisible = false;
 			imgLoaded = false;
-		});
-	}
-
-	$: if (!seenBefore && IOSupported) {
-		isVisible = false;
-		imgLoaded = false;
-	} else if (!IOSupported || seenBefore) {
-		isVisible = true;
-		imgLoaded = true;
-	}
+		} else if (!IOSupported || seenBefore) {
+			isVisible = true;
+			imgLoaded = true;
+		}
+	});
 </script>
 
 <div
@@ -67,7 +97,7 @@
 >
 	<div class="inner" style={styleString} bind:this={imageInnerWrapper}>
 		<!-- Preserve the aspect ratio. -->
-		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%" />
+		<div class="full" style="padding-bottom: {100 / (image.width / image.height)}%"></div>
 
 		{#if blurryPlaceholder && load == 'lazy'}
 			<Image
@@ -90,7 +120,7 @@
 				{title}
 				class="bg-container"
 				style="background-color: {bgColor(backgroundColor)}; opacity: {imgLoaded ? 0 : 1};"
-			/>
+			></div>
 		{/if}
 
 		{#if isVisible || load === 'eager'}

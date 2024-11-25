@@ -1,50 +1,73 @@
 <script lang="ts">
+	import { createBubbler, handlers } from 'svelte/legacy';
 	import type { Fit, Load, Watermark } from './types.js';
+	import type {HTMLImgAttributes} from 'svelte/elements'
 	import { createFinalURL } from './_utils.js';
 
-	export let handle: string;
-	export let alt: string;
-	export let height: number;
-	export let width: number;
-	export let title: string | undefined = undefined;
-	export let opacity: 0 | 1 = 0;
-	export let transitionDelay: string = '0.25s';
-	export let transition: string = 'opacity 0.5s';
-	export let center: boolean = false;
-	export let baseURI: string = 'https://media.graphassets.com';
-	export let media: string | undefined = undefined;
-	export let id: string | undefined = undefined;
+	interface Props extends Omit<HTMLImgAttributes, 'src' | 'srcset' | 'sizes'> {
+		handle: string;
+		title?: string | undefined;
+		opacity?: 0 | 1;
+		transitionDelay?: string;
+		transition?: string;
+		center?: boolean;
+		baseURI?: string;
+		media?: string | undefined;
+		// --- Styling and Presentation ---
+		fit?: Fit;
+		maxWidth?: number | undefined;
+		maxHeight?: number | undefined;
+		load?: Load;
+		absolute?: boolean;
+		// --- Image Enhancements and Effects ---
+		quality?: number | undefined;
+		rotate?: number | undefined;
+		sharpen?: number | undefined;
+		blur?: number | undefined;
+		withWebp?: boolean;
+		// --- Miscellaneous Features ---
+		watermark?: Watermark | undefined;
+	}
 
-	// --- Styling and Presentation ---
-	export let fit: Fit = 'crop';
-	export let maxWidth: number | undefined = undefined;
-	export let maxHeight: number | undefined = undefined;
-	export let load: Load = 'lazy';
-	export let absolute = false;
-
-	// --- Image Enhancements and Effects ---
-	export let quality: number | undefined = undefined;
-	export let rotate: number | undefined = undefined;
-	export let sharpen: number | undefined = undefined;
-	export let blur: number | undefined = undefined;
-
-	export let withWebp: boolean = true;
-	// --- Miscellaneous Features ---
-	export let watermark: Watermark | undefined = undefined;
+	let {
+		handle,
+		alt,
+		height,
+		width,
+		title = undefined,
+		opacity = $bindable(0),
+		transitionDelay = '0.25s',
+		transition = 'opacity 0.5s',
+		center = false,
+		baseURI = 'https://media.graphassets.com',
+		media = undefined,
+		fit = 'crop',
+		maxWidth = undefined,
+		maxHeight = undefined,
+		load = 'lazy',
+		absolute = false,
+		quality = undefined,
+		rotate = undefined,
+		sharpen = undefined,
+		blur = undefined,
+		withWebp = true,
+		watermark = undefined,
+		...rest
+	}: Props = $props();
 
 	function handleLoading(e: { target: HTMLImageElement } & Event) {
 		if (e.target.complete) opacity = 1;
 	}
 
-	$: style = `max-width: ${width}px; max-height: ${height}px; ${
+	let style = $derived(`max-width: ${width}px; max-height: ${height}px; ${
 		load === 'eager'
 			? ''
 			: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity:
 					 1 
 			  ;`
-	} ${center ? `aspect-ratio: ${width} / ${height}; object-fit: contain !important;` : ``}`;
+	} ${center ? `aspect-ratio: ${width} / ${height}; object-fit: contain !important;` : ``}`);
 
-	$: ({ sizes, srcset, src } = createFinalURL(
+	let { sizes, srcset, src } = $derived(createFinalURL(
 		{ width, height: maxHeight ?? height, handle },
 		withWebp,
 		baseURI,
@@ -65,17 +88,13 @@
 </svelte:head>
 
 <img
-	{id}
+	{...rest}
 	{src}
 	{srcset}
 	{sizes}
-	{alt}
 	{style}
 	{title}
 	class:absolute
-	on:load={handleLoading}
-	on:load
-	on:error
 />
 
 <style>
