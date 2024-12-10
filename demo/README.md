@@ -51,6 +51,7 @@ pnpm dev
 The demo site should now be running on your local machine.
 
 ## Contributing
+
 We welcome contributions! Please see the main repository for more detail.
 
 ## License

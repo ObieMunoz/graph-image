@@ -29,8 +29,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest run",
-		"lint": "prettier --plugin=prettier-plugin-svelte --check . && eslint .",
-		"format": "prettier --plugin=prettier-plugin-svelte --write ."
+		"lint": "eslint . && prettier --check .",
+		"format": "prettier --write ."
 	},
 	"exports": {
 		".": {
@@ -45,27 +45,28 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^4.0.0"
+		"svelte": "^5"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/kit": "^2.5.27",
-		"@sveltejs/package": "^2.3.7",
-		"@sveltejs/vite-plugin-svelte": "^4.0.0",
-		"@typescript-eslint/eslint-plugin": "^6.13.2",
-		"@typescript-eslint/parser": "^6.13.2",
-		"eslint": "^8.55.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.45.1",
-		"prettier": "^3.1.0",
-		"prettier-plugin-svelte": "^3.2.6",
-		"publint": "^0.2.6",
-		"svelte": "^5.0.0",
-		"svelte-check": "^4.0.0",
-		"tslib": "^2.6.2",
-		"typescript": "^5.5.0",
-		"vite": "^5.4.4",
-		"vitest": "^1.0.1"
+		"@sveltejs/adapter-auto": "catalog:",
+		"@sveltejs/kit": "catalog:",
+		"@sveltejs/package": "catalog:",
+		"@sveltejs/vite-plugin-svelte": "catalog:",
+		"@types/eslint": "catalog:",
+		"eslint": "catalog:",
+		"eslint-config-prettier": "catalog:",
+		"eslint-plugin-svelte": "catalog:",
+		"globals": "catalog:",
+		"prettier": "catalog:",
+		"prettier-plugin-svelte": "catalog:",
+		"svelte": "catalog:",
+		"svelte-check": "catalog:",
+		"tslib": "catalog:",
+		"typescript": "catalog:",
+		"typescript-eslint": "catalog:",
+		"vite": "catalog:",
+		"vitest": "catalog:",
+		"publint": "^0.2.6"
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",

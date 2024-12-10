@@ -1,21 +1,17 @@
 <script lang="ts">
 	import type { Fit, Watermark } from './types.js';
+	import type { HTMLSourceAttributes } from 'svelte/elements';
 	import { createFinalURL } from './_utils.js';
 
-
-	
-
-	
-	interface Props {
+	interface Props extends Omit<HTMLSourceAttributes, 'src' | 'srcset'> {
 		handle: string;
-		height: number;
+		title?: string | undefined;
 		width: number;
-		media: string;
-		preloadMedia?: string | undefined;
-		maxWidth?: number | undefined;
+		preloadMedia?: string;
 		baseURI?: string;
 		// --- Styling and Presentation ---
 		fit?: Fit;
+		// --- Image Enhancements and Effects ---
 		quality?: number | undefined;
 		rotate?: number | undefined;
 		sharpen?: number | undefined;
@@ -27,11 +23,10 @@
 
 	let {
 		handle,
-		height,
 		width,
-		media,
+		sizes,
 		preloadMedia = undefined,
-		maxWidth = undefined,
+		media = undefined,
 		baseURI = 'https://media.graphassets.com',
 		fit = 'crop',
 		quality = undefined,
@@ -39,21 +34,19 @@
 		sharpen = undefined,
 		blur = undefined,
 		withWebp = true,
-		watermark = undefined
+		watermark = undefined,
+		...rest
 	}: Props = $props();
 
-	let { sizes, srcset, src } = $derived(createFinalURL(
-		{ width, height, handle },
-		withWebp,
-		baseURI,
-		maxWidth ?? width,
-		fit,
-		quality,
-		sharpen,
-		rotate,
-		blur,
-		watermark
-	));
+	let { srcset, src } = $derived(
+		createFinalURL(handle, width, fit, sizes, withWebp, baseURI, {
+			quality,
+			sharpen,
+			rotate,
+			blur,
+			watermark
+		})
+	);
 </script>
 
 <svelte:head>
@@ -69,4 +62,4 @@
 	{/if}
 </svelte:head>
 
-<source {src} {srcset} {sizes} {media} />
+<source {...rest} {src} {srcset} {sizes} {media} />

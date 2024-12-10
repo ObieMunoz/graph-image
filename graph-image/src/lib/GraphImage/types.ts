@@ -27,3 +27,10 @@ export type Watermark = {
 
 export type Fit = 'clip' | 'crop' | 'scale' | 'max' | 'center-contain';
 export type Load = 'lazy' | 'eager';
+export type TransformParams = {
+	quality?: number;
+	sharpen?: number;
+	rotate?: number;
+	blur?: number;
+	watermark?: Watermark;
+};

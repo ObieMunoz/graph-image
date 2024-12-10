@@ -1,75 +1,23 @@
-import { writable, get } from 'svelte/store';
 import type {
-	GraphAsset,
-	ImageCacheType,
-	ResizeParams,
 	ResizeFunction,
 	TransformFunction,
-	Watermark,
+	Fit,
 	VerticalPosition,
-	Fit
+	Watermark,
+	TransformParams
 } from './types.js';
 
-const imageCache = writable<ImageCacheType>({});
-const listeners: [Element, () => void][] = [];
-let io: IntersectionObserver | undefined;
-
-function inImageCache(image: GraphAsset, shouldCache: boolean): boolean {
-	const cache = get(imageCache);
-
-	if (cache[image.handle]) {
-		return true;
-	}
-
-	if (shouldCache) {
-		imageCache.update((current) => {
-			current[image.handle] = true;
-			return current;
-		});
-	}
-
-	return false;
-}
-
-function getIO(): IntersectionObserver {
-	if (!io && typeof window !== 'undefined') {
-		io = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					listeners.forEach((listener) => {
-						if (listener[0] === entry.target) {
-							// Edge doesn't currently support isIntersecting, so also test for an intersectionRatio > 0
-							if (entry.isIntersecting || entry.intersectionRatio > 0) {
-								// when we intersect we cache the intersecting image for subsequent mounts
-								io!.unobserve(listener[0]);
-								listener[1]();
-							}
-						}
-					});
-				});
-			},
-			{ rootMargin: '200px' }
-		);
-	}
-
-	if (!io) {
-		throw new Error('IntersectionObserver is not available');
-	}
-
-	return io;
-}
-
-function listenToIntersections(element: Element, callback: () => void): void {
-	getIO().observe(element);
-	listeners.push([element, callback]);
-}
+const deviceSizes = [384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+const relativeSizes = [1, 2];
 
 function bgColor(backgroundColor: string | boolean): string {
 	return typeof backgroundColor === 'boolean' ? 'lightgray' : backgroundColor;
 }
 
-function resizeImage({ width, height, fit }: ResizeParams): string {
-	return `resize=w:${width},h:${height},fit:${fit == 'center-contain' ? 'clip' : fit}`;
+function resizeImage(width: number, fit: Fit = 'clip', height?: number): string {
+	return `resize=w:${width},${height ? `h:${height},` : ''}fit:${
+		fit == 'center-contain' ? 'clip' : fit
+	}`;
 }
 
 function compressAndWebp(webp: boolean): string {
@@ -84,37 +32,72 @@ function constructURL(handle: string, withWebp: boolean, baseURI: string): Resiz
 	};
 }
 
-function responsiveSizes(size: number): number[] {
-	return [size / 4, size / 2, size, size * 1.5, size * 2, size * 3];
-}
+function getWidths(sizes: string): number[] {
+	const viewportWidthRe = /(^|\s)(1?\d?\d)vw/g;
+	const percentSizes = [];
+	for (let match; (match = viewportWidthRe.exec(sizes)); match) {
+		percentSizes.push(parseInt(match[2]));
+	}
 
-function getWidths(width: number, maxWidth: number): number[] {
-	const sizes = responsiveSizes(maxWidth).filter((size) => size < width);
-	// Add the original width to ensure the largest image possible is available for small images.
-	const finalSizes = [...sizes, width];
-	return finalSizes;
+	if (percentSizes.length) {
+		const smallestRatio = Math.min(...percentSizes) * 0.01;
+		return deviceSizes.filter((s) => s <= deviceSizes[deviceSizes.length - 1] * smallestRatio);
+	}
+
+	return deviceSizes;
 }
 
 function srcSet(
 	srcBase: (resize: string) => (transforms: string[]) => string,
-	srcWidths: number[],
-	height: number,
+	sizes: string | undefined | null,
+	width: number,
 	fit: string,
 	transforms: string[]
 ): string {
-	return srcWidths
+	if (!sizes) {
+		return relativeSizes
+			.map((size) => {
+				const resizeOption = `resize=w:${width * size},fit:${fit}`;
+				const src = srcBase(resizeOption)(transforms);
+				return `${src} ${size}x`;
+			})
+			.join(',\n');
+	}
+
+	const widths = getWidths(sizes);
+
+	return widths
 		.map((width) => {
-			const resizeOption = `resize=w:${Math.floor(width)},h:${Math.floor(height)},fit:${
-				fit == 'center-contain' ? 'clip' : fit
-			}`;
+			const resizeOption = `resize=w:${width},fit:${fit}`;
 			const src = srcBase(resizeOption)(transforms);
-			return `${src} ${Math.floor(width)}w`;
+			return `${src} ${width}w`;
 		})
 		.join(',\n');
 }
 
-export function imgSizes(maxWidth: number): string {
-	return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
+function createFinalURL(
+	handle: string,
+	width: number,
+	fit: Fit,
+	sizes: string | undefined | null = undefined,
+	withWebp: boolean,
+	baseURI: string,
+	transformations: TransformParams = {}
+) {
+	//Get Image Transforms
+	const transforms = createTransformations(transformations);
+	//Get base Url
+	const srcBase = constructURL(handle, withWebp, baseURI);
+	const imageWidth = sizes ? deviceSizes[deviceSizes.length - 1] : width;
+	const sizedSrc = srcBase(resizeImage(imageWidth, fit));
+
+	const src = sizedSrc(transforms);
+	const srcset = srcSet(srcBase, sizes, width, fit, transforms);
+
+	return {
+		src,
+		srcset
+	};
 }
 
 function createWatermarkTransformation(watermark: Watermark): string {
@@ -140,40 +123,7 @@ function createWatermarkTransformation(watermark: Watermark): string {
 	return `watermark=position:[${positionStr}],file:${handle}${sizeStr}`;
 }
 
-function createFinalURL(
-	image: GraphAsset,
-	withWebp: boolean,
-	baseURI: string,
-	maxWidth: number,
-	fit: Fit,
-	quality: number | undefined = undefined,
-	sharpen: number | undefined = undefined,
-	rotate: number | undefined = undefined,
-	blur: number | undefined = undefined,
-	watermark: Watermark | undefined = undefined
-) {
-	const transforms = createTransformations(quality, sharpen, rotate, blur, watermark);
-	const srcBase = constructURL(image.handle, withWebp, baseURI);
-
-	const sizedSrc = srcBase(resizeImage({ width: image.width, height: image.height, fit }));
-	const src = sizedSrc(transforms);
-
-	const srcset = srcSet(srcBase, getWidths(image.width, maxWidth), image.height, fit, transforms);
-	const sizes = imgSizes(maxWidth);
-	return {
-		src,
-		srcset,
-		sizes
-	};
-}
-
-function createTransformations(
-	quality: number | undefined,
-	sharpen: number | undefined,
-	rotate: number | undefined,
-	blur: number | undefined,
-	watermark: Watermark | undefined
-) {
+function createTransformations({ quality, sharpen, rotate, blur, watermark }: TransformParams) {
 	const transforms = [];
 
 	if (quality && quality > 0 && quality <= 100) {
@@ -191,12 +141,10 @@ function createTransformations(
 	if (rotate && rotate > 0 && rotate < 360) {
 		transforms.push(`rotate=deg:${rotate}`);
 	}
-
 	if (watermark) {
 		transforms.push(createWatermarkTransformation(watermark));
 	}
-
 	return transforms;
 }
 
-export { bgColor, createFinalURL, inImageCache, listenToIntersections };
+export { bgColor, createFinalURL };
