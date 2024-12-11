@@ -1,7 +1,7 @@
 {
 	"name": "graph-image",
 	"displayName": "Graph Image",
-	"version": "0.3.1",
+	"version": "1.0.0",
 	"author": "Obie Munoz obiemunozjr@gmail.com",
 	"description": "Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph",
 	"license": "MIT",

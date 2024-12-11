@@ -1,5 +1,24 @@
 # graph-image
 
+## 1.0.0
+
+### Major Changes
+
+- 280fb1a: Svelte 5 Runes Upgrade
+
+  - Updated Package to use new Svelte 5 runes syntax
+  - Updated code to use Svelte Actions for client side only code.
+  - Added `layout` parameter for `Image` for more options of how the image is displayed on the page
+  - Updated all dependencies
+  - Updated srcset algorithm to pick more common device sizes and also support larger devices.
+  - You can now pass all HTML Image attributes & events to the `Image` & `GraphImage` component.
+  - FadeIn for image is now purely CSS you can edit the transition property with css variable `--graph-image-transition`
+
+  ## Breaking Changes
+
+  - `center` prop has been removed please use `layout` = `fullWidth` instead
+  - `maxWidth` prop has been removed. Use `layout` = `constrained` (default) and set the width to the dersired maxWidth of the image
+
 ## 0.3.1
 
 ### Patch Changes
