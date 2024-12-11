@@ -1,23 +1,41 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "package": {
-      "dependsOn": ["^package"],
-      "inputs": ["src/**"],
-      "outputs": ["dist/**"]
+      "dependsOn": [
+        "^package"
+      ],
+      "inputs": [
+        "src/**"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
     },
     "format": {},
     "test": {},
     "build": {
-      "dependsOn": ["^package", "^build"],
-      "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"]
+      "dependsOn": [
+        "^package",
+        "^build"
+      ],
+      "outputs": [
+        ".svelte-kit/**",
+        ".vercel/**",
+        "dist/**"
+      ],
+      "env": [
+        "HYGRAPH_TOKEN",
+        "HYGRAPH_URL"
+      ]
     },
     "lint": {},
     "dev": {
-      "dependsOn": ["^package"],
+      "dependsOn": [
+        "^package"
+      ],
       "cache": false,
       "persistent": true
     }
-  },
-  "globalDotEnv": [".env"]
+  }
 }

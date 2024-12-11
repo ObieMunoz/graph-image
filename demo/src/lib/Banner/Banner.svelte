@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { GraphImage, GraphImageTypes } from 'graph-image';
 
-	export let logo: GraphImageTypes.GraphAsset;
+	interface Props {
+		logo: GraphImageTypes.GraphAsset;
+	}
+
+	let { logo }: Props = $props();
 </script>
 
 <div class="banner">

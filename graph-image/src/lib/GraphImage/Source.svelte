@@ -1,38 +1,52 @@
 <script lang="ts">
 	import type { Fit, Watermark } from './types.js';
+	import type { HTMLSourceAttributes } from 'svelte/elements';
 	import { createFinalURL } from './_utils.js';
 
-	export let handle: string;
-	export let height: number;
-	export let width: number;
-	export let media: string;
-	export let preloadMedia: string | undefined = undefined;
-	export let maxWidth: number | undefined = undefined;
-	export let baseURI: string = 'https://media.graphassets.com';
+	interface Props extends Omit<HTMLSourceAttributes, 'src' | 'srcset'> {
+		handle: string;
+		title?: string | undefined;
+		width: number;
+		preloadMedia?: string;
+		baseURI?: string;
+		// --- Styling and Presentation ---
+		fit?: Fit;
+		// --- Image Enhancements and Effects ---
+		quality?: number | undefined;
+		rotate?: number | undefined;
+		sharpen?: number | undefined;
+		blur?: number | undefined;
+		withWebp?: boolean;
+		// --- Miscellaneous Features ---
+		watermark?: Watermark | undefined;
+	}
 
-	// --- Styling and Presentation ---
-	export let fit: Fit = 'crop';
+	let {
+		handle,
+		width,
+		sizes,
+		preloadMedia = undefined,
+		media = undefined,
+		baseURI = 'https://media.graphassets.com',
+		fit = 'crop',
+		quality = undefined,
+		rotate = undefined,
+		sharpen = undefined,
+		blur = undefined,
+		withWebp = true,
+		watermark = undefined,
+		...rest
+	}: Props = $props();
 
-	export let quality: number | undefined = undefined;
-	export let rotate: number | undefined = undefined;
-	export let sharpen: number | undefined = undefined;
-	export let blur: number | undefined = undefined;
-	export let withWebp: boolean = true;
-	// --- Miscellaneous Features ---
-	export let watermark: Watermark | undefined = undefined;
-
-	$: ({ sizes, srcset, src } = createFinalURL(
-		{ width, height, handle },
-		withWebp,
-		baseURI,
-		maxWidth ?? width,
-		fit,
-		quality,
-		sharpen,
-		rotate,
-		blur,
-		watermark
-	));
+	let { srcset, src } = $derived(
+		createFinalURL(handle, width, fit, sizes, withWebp, baseURI, {
+			quality,
+			sharpen,
+			rotate,
+			blur,
+			watermark
+		})
+	);
 </script>
 
 <svelte:head>
@@ -48,4 +62,4 @@
 	{/if}
 </svelte:head>
 
-<source {src} {srcset} {sizes} {media} />
+<source {...rest} {src} {srcset} {sizes} {media} />

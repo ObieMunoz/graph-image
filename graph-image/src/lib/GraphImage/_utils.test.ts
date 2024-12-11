@@ -1,4 +1,5 @@
-import { bgColor, createFinalURL, inImageCache } from './_utils.js';
+import { bgColor, createFinalURL } from './_utils.js';
+import { imageCache } from './cache.svelte.js';
 import { describe, it, expect } from 'vitest';
 import type { GraphAsset, Watermark } from './types.js';
 
@@ -16,120 +17,53 @@ describe('_utils.ts // Utility Functions', () => {
 
 	describe('createFinalURL', () => {
 		it('should correctly generate final URL without any transformations', () => {
-			const image = {
-				handle: 'sampleHandle',
-				width: 1920,
-				height: 1080
-			};
-
 			const result = createFinalURL(
-				image,
-				true,
-				'http://example.com',
-				500,
+				'sampleHandle',
+				1920,
 				'crop',
-				undefined,
-				undefined,
-				undefined,
-				undefined
+				'100vw',
+				true,
+				'http://example.com'
 			);
+			const expecteddeviceSizes = [384, 640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+			const expectedSrcSet = expecteddeviceSizes
+				.map((size) => {
+					return `http://example.com/resize=w:${size},fit:crop/auto_image/compress/sampleHandle ${size}w`;
+				})
+				.join(',\n');
 
-			expect(result.sizes).toBe('(min-width: 500px) 500px, 100vw');
-
-			const expectedSrcSet =
-				'http://example.com/resize=w:125,h:1080,fit:crop/auto_image/compress/sampleHandle 125w,\n' +
-				'http://example.com/resize=w:250,h:1080,fit:crop/auto_image/compress/sampleHandle 250w,\n' +
-				'http://example.com/resize=w:500,h:1080,fit:crop/auto_image/compress/sampleHandle 500w,\n' +
-				'http://example.com/resize=w:750,h:1080,fit:crop/auto_image/compress/sampleHandle 750w,\n' +
-				'http://example.com/resize=w:1000,h:1080,fit:crop/auto_image/compress/sampleHandle 1000w,\n' +
-				'http://example.com/resize=w:1500,h:1080,fit:crop/auto_image/compress/sampleHandle 1500w,\n' +
-				'http://example.com/resize=w:1920,h:1080,fit:crop/auto_image/compress/sampleHandle 1920w';
 			expect(result.srcset).toBe(expectedSrcSet);
 		});
 
 		it('should apply quality transformation', () => {
-			const image = {
-				handle: 'sampleHandle',
-				width: 100,
-				height: 200
-			};
-			const result = createFinalURL(
-				image,
-				true,
-				'http://example.com',
-				500,
-				'crop',
-				90,
-				undefined,
-				undefined,
-				undefined
-			);
+			const result = createFinalURL('sampleHandle', 100, 'crop', undefined, true, 'test', {
+				quality: 90
+			});
 			expect(result.src).toContain('quality=value:90');
 		});
 
 		it('should apply sharpen transformation', () => {
-			const image = {
-				handle: 'sampleHandle',
-				width: 100,
-				height: 200
-			};
-			const result = createFinalURL(
-				image,
-				true,
-				'http://example.com',
-				500,
-				'crop',
-				undefined,
-				10,
-				undefined,
-				undefined
-			);
+			const result = createFinalURL('sampleHandle', 100, 'crop', undefined, true, 'test', {
+				sharpen: 10
+			});
 			expect(result.src).toContain('sharpen=amount:10');
 		});
 
 		it('should apply rotate transformation', () => {
-			const image = {
-				handle: 'sampleHandle',
-				width: 100,
-				height: 200
-			};
-			const result = createFinalURL(
-				image,
-				true,
-				'http://example.com',
-				500,
-				'crop',
-				undefined,
-				undefined,
-				90,
-				undefined
-			);
+			const result = createFinalURL('sampleHandle', 100, 'crop', undefined, true, 'test', {
+				rotate: 90
+			});
 			expect(result.src).toContain('rotate=deg:90');
 		});
-
 		it('should apply watermark transformation', () => {
-			const image = {
-				handle: 'sampleHandle',
-				width: 100,
-				height: 200
-			};
 			const watermark: Watermark = {
 				handle: 'watermarkHandle',
 				size: 30,
 				position: ['top', 'right']
 			};
-			const result = createFinalURL(
-				image,
-				true,
-				'http://example.com',
-				500,
-				'crop',
-				undefined,
-				undefined,
-				undefined,
-				undefined,
+			const result = createFinalURL('sampleHandle', 100, 'crop', undefined, true, 'test', {
 				watermark
-			);
+			});
 			expect(result.src).toContain('watermark=position:[top,right],file:watermarkHandle,size:30');
 		});
 	});
@@ -141,7 +75,7 @@ describe('_utils.ts // Utility Functions', () => {
 				width: 100,
 				height: 100
 			};
-			expect(inImageCache(image, false)).toBe(false);
+			expect(imageCache.seenBefore(image.handle)).toBe(false);
 		});
 
 		it('should add an image to cache when shouldCache is true', () => {
@@ -150,7 +84,7 @@ describe('_utils.ts // Utility Functions', () => {
 				width: 100,
 				height: 100
 			};
-			expect(inImageCache(image, true)).toBe(false);
+			expect(imageCache.seenBefore(image.handle)).toBe(false);
 		});
 
 		it('should return true for an image that is already in cache', () => {
@@ -159,18 +93,9 @@ describe('_utils.ts // Utility Functions', () => {
 				width: 100,
 				height: 100
 			};
-			expect(inImageCache(image, false)).toBe(true);
-		});
 
-		it('should correctly cache an image through a sequence of operations', () => {
-			const image: GraphAsset = {
-				handle: 'sampleHandle3',
-				width: 100,
-				height: 100
-			};
-			expect(inImageCache(image, false)).toBe(false);
-			expect(inImageCache(image, true)).toBe(false);
-			expect(inImageCache(image, false)).toBe(true);
+			imageCache.cacheImage(image.handle);
+			expect(imageCache.seenBefore(image.handle)).toBe(true);
 		});
 	});
 });

@@ -1,93 +1,113 @@
 <script lang="ts">
-	import type { Fit, Load, Watermark } from './types.js';
+	import type { ImageProps } from './types.js';
 	import { createFinalURL } from './_utils.js';
 
-	export let handle: string;
-	export let alt: string;
-	export let height: number;
-	export let width: number;
-	export let title: string | undefined = undefined;
-	export let opacity: 0 | 1 = 0;
-	export let transitionDelay: string = '0.25s';
-	export let transition: string = 'opacity 0.5s';
-	export let center: boolean = false;
-	export let baseURI: string = 'https://media.graphassets.com';
-	export let media: string | undefined = undefined;
-	export let id: string | undefined = undefined;
+	let {
+		handle,
+		height,
+		maxHeight,
+		width,
+		sizes,
+		layout = 'constrained',
+		loading = 'lazy',
+		baseURI = 'https://media.graphassets.com',
+		fit = 'crop',
+		absolute = false,
+		quality = undefined,
+		rotate = undefined,
+		sharpen = undefined,
+		blur = undefined,
+		withWebp = true,
+		watermark = undefined,
+		media,
+		...rest
+	}: ImageProps = $props();
 
-	// --- Styling and Presentation ---
-	export let fit: Fit = 'crop';
-	export let maxWidth: number | undefined = undefined;
-	export let maxHeight: number | undefined = undefined;
-	export let load: Load = 'lazy';
-	export let absolute = false;
+	let styleObj = $derived.by(() => {
+		if (layout === 'constrained') {
+			return [
+				['object-fit', 'cover'],
+				['aspect-ratio', `${width} / ${height}`],
+				['max-width', `${width}px`],
+				['max-height', `${maxHeight || height}px`],
+				['width', '100%']
+			];
+		}
+		if (layout === 'fullWidth') {
+			return [
+				['object-fit', 'cover'],
+				['aspect-ratio', `${width} / ${height}`],
+				['width', '100%']
+			];
+		}
+		return [
+			['width', `${width}px`],
+			['height', `${height}px`]
+		];
+	});
 
-	// --- Image Enhancements and Effects ---
-	export let quality: number | undefined = undefined;
-	export let rotate: number | undefined = undefined;
-	export let sharpen: number | undefined = undefined;
-	export let blur: number | undefined = undefined;
+	let style = $derived(styleObj.map((val) => val.join(':')).join(';') + rest.style);
 
-	export let withWebp: boolean = true;
-	// --- Miscellaneous Features ---
-	export let watermark: Watermark | undefined = undefined;
+	// handle sizes attribute with resonable default if not provided
+	let calculatedSizes = $derived.by(() => {
+		if (sizes) return sizes;
+		if (layout === 'constrained') return `(min-width: ${width}px) ${width}px, 100vw`;
+		if (layout === 'fullWidth') return '100vw';
+		return `${width}px`;
+	});
 
-	function handleLoading(e: { target: HTMLImageElement } & Event) {
-		if (e.target.complete) opacity = 1;
-	}
-
-	$: style = `max-width: ${width}px; max-height: ${height}px; ${
-		load === 'eager'
-			? ''
-			: `transition: ${transition}; transition-delay: ${transitionDelay}; opacity:
-					 1 
-			  ;`
-	} ${center ? `aspect-ratio: ${width} / ${height}; object-fit: contain !important;` : ``}`;
-
-	$: ({ sizes, srcset, src } = createFinalURL(
-		{ width, height: maxHeight ?? height, handle },
-		withWebp,
-		baseURI,
-		maxWidth ?? width,
-		fit,
-		quality,
-		sharpen,
-		rotate,
-		blur,
-		watermark
-	));
+	let { srcset, src } = $derived(
+		createFinalURL(handle, width, fit, calculatedSizes, withWebp, baseURI, {
+			quality,
+			sharpen,
+			rotate,
+			blur,
+			watermark
+		})
+	);
 </script>
 
 <svelte:head>
-	{#if load === 'eager'}
-		<link rel="preload" as="image" href={src} imagesrcset={srcset} imagesizes={sizes} {media} />
+	{#if loading === 'eager'}
+		<link
+			rel="preload"
+			as="image"
+			href={src}
+			imagesrcset={srcset}
+			imagesizes={calculatedSizes}
+			{media}
+		/>
 	{/if}
 </svelte:head>
 
 <img
-	{id}
+	{...rest}
 	{src}
 	{srcset}
-	{sizes}
-	{alt}
 	{style}
-	{title}
+	{loading}
+	sizes={calculatedSizes}
+	fetchpriority={loading === 'eager' ? 'high' : 'auto'}
+	decoding={loading === 'lazy' ? 'async' : undefined}
 	class:absolute
-	on:load={handleLoading}
-	on:load
-	on:error
 />
 
 <style>
-	img {
-		width: 100%;
-		object-fit: cover;
-		object-position: center;
-	}
-
 	.absolute {
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+	img[loading='lazy'] {
+		transition: var(--graph-image-transition, opacity 0.1s 0.25s);
+		@starting-style {
+			opacity: 0;
+		}
+	}
+
+	@media (user-preference: reduced-motion) {
+		img[loading='lazy'] {
+			transition: none;
+		}
 	}
 </style>
