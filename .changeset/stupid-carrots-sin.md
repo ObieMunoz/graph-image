@@ -9,5 +9,11 @@ Svelte 5 Runes Upgrade
 - Added `layout` parameter for `Image` for more options of how the image is displayed on the page
 - Updated all dependencies
 - Updated srcset algorithm to pick more common device sizes and also support larger devices.
-- You can now pass all HTML Image attributes & events to the Image component.  
+- You can now pass all HTML Image attributes & events to the `Image` & `GraphImage` component.  
 - FadeIn for image is now purely CSS  you can edit the transition property with css variable `--graph-image-transition`
+
+
+## Breaking Changes
+
+- `center` prop has been removed please use `layout` = `fullWidth` instead
+- `maxWidth` prop has been removed. Use `layout` = `constrained` (default) and set the width to the dersired maxWidth of the image

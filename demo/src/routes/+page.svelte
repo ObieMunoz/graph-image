@@ -64,7 +64,6 @@
 				image={{ ...image, width: 590, height: 331 }}
 				fit="clip"
 				withWebp
-				maxWidth={1200}
 			/>
 		</div>
 	{/each}

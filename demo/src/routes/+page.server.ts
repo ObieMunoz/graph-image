@@ -1,9 +1,10 @@
 import type { PageServerLoad } from './$types';
-import { HYGRAPH_TOKEN, HYGRAPH_URL } from '$env/static/private';
+import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import type { GraphImageTypes } from 'graph-image';
+
+import { HYGRAPH_TOKEN, HYGRAPH_URL } from '$env/static/private';
 import { GraphQLClient, gql } from 'graphql-request';
 import { parse } from 'graphql';
-import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
 export const load: PageServerLoad = async ({ fetch }) => {
 	const client = new GraphQLClient(HYGRAPH_URL, {

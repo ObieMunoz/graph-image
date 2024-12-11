@@ -1,36 +1,11 @@
 <script lang="ts">
-	import type { Fit, Load, Watermark } from './types.js';
-	import type { HTMLImgAttributes } from 'svelte/elements';
+	import type { ImageProps } from './types.js';
 	import { createFinalURL } from './_utils.js';
-	interface Props extends Omit<HTMLImgAttributes, 'src' | 'srcset'> {
-		handle: string;
-		title?: string;
-		width: number;
-		baseURI?: string;
-		/** @description determines how the images is scaled
-		 *  @default 'constrained'
-		 */
-		layout?: 'fullWidth' | 'constrained' | 'fixed';
-		// --- Styling and Presentation ---
-		fit?: Fit;
-		maxWidth?: number;
-		maxHeight?: number;
-		load?: Load;
-		absolute?: boolean;
-		// --- Image Enhancements and Effects ---
-		quality?: number;
-		rotate?: number;
-		sharpen?: number;
-		blur?: number;
-		withWebp?: boolean;
-		media?: string | null;
-		// --- Miscellaneous Features ---
-		watermark?: Watermark;
-	}
 
 	let {
 		handle,
 		height,
+		maxHeight,
 		width,
 		sizes,
 		layout = 'constrained',
@@ -46,7 +21,7 @@
 		watermark = undefined,
 		media,
 		...rest
-	}: Props = $props();
+	}: ImageProps = $props();
 
 	let styleObj = $derived.by(() => {
 		if (layout === 'constrained') {
@@ -54,7 +29,7 @@
 				['object-fit', 'cover'],
 				['aspect-ratio', `${width} / ${height}`],
 				['max-width', `${width}px`],
-				['max-height', `${height}px`],
+				['max-height', `${maxHeight || height}px`],
 				['width', '100%']
 			];
 		}
@@ -124,9 +99,15 @@
 		left: 0;
 	}
 	img[loading='lazy'] {
-		transition: var(--graph-image-transition, opacity 0.25s 0.5s);
+		transition: var(--graph-image-transition, opacity 0.1s 0.25s);
 		@starting-style {
 			opacity: 0;
+		}
+	}
+
+	@media (user-preference: reduced-motion) {
+		img[loading='lazy'] {
+			transition: none;
 		}
 	}
 </style>

@@ -1,48 +1,22 @@
 <script lang="ts">
-	import type { Fit, GraphAsset, Load, Watermark } from './types.ts';
+	import type { GraphImageProps } from './types.ts';
+
 	import Image from './Image.svelte';
 	import { bgColor } from './_utils.js';
 	import { visibility } from './actions/visibility.js';
 	import { imageCache } from './cache.svelte.js';
-	interface Props {
-		image: GraphAsset;
-		alt?: string;
-		baseURI?: string;
-		title?: string;
-		// --- Styling and Presentation ---
-		fit?: Fit;
-		maxWidth?: number | undefined;
-		style?: Partial<CSSStyleDeclaration>;
-		load?: Load;
-		// --- Image Enhancements and Effects ---
-		backgroundColor?: string | boolean;
-		blurryPlaceholder?: boolean;
-		fadeIn?: boolean;
-		quality?: number | undefined;
-		rotate?: number | undefined;
-		sharpen?: number | undefined;
-		withWebp?: boolean;
-		// --- Miscellaneous Features ---
-		watermark?: Watermark | undefined;
-	}
 
 	let {
 		image,
-		alt = '',
-		baseURI = 'https://media.graphassets.com',
-		title = '',
-		fit = 'crop',
-		maxWidth = undefined,
+		alt,
+		title,
+		baseURI,
 		style = {},
 		load = 'lazy',
 		backgroundColor = '',
 		blurryPlaceholder = false,
-		quality = undefined,
-		rotate = undefined,
-		sharpen = undefined,
-		withWebp = true,
-		watermark = undefined
-	}: Props = $props();
+		...rest
+	}: GraphImageProps = $props();
 
 	let imgLoaded = $state(false);
 	let isVisible = $state(false);
@@ -77,7 +51,7 @@
 				{title}
 				{baseURI}
 				handle={image.handle}
-				load="eager"
+				loading="eager"
 				fit="crop"
 				width={20}
 				height={20}
@@ -98,24 +72,19 @@
 
 		{#if isVisible || seenBefore || load === 'eager'}
 			<Image
+				{...rest}
 				{alt}
 				{title}
 				handle={image.handle}
-				{load}
-				{baseURI}
-				{maxWidth}
-				{fit}
-				{quality}
-				{rotate}
-				{sharpen}
-				{withWebp}
-				{watermark}
 				width={image.width}
 				height={image.height}
+				loading={load}
+				{baseURI}
 				absolute
-				onload={() => {
+				onload={(e) => {
 					imgLoaded = true;
 					imageCache.cacheImage(image.handle);
+					if (rest.onload) rest.onload(e);
 				}}
 			/>
 		{/if}

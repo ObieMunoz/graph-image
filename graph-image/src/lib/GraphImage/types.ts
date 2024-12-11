@@ -1,3 +1,5 @@
+import type { HTMLImgAttributes } from 'svelte/elements';
+
 export interface GraphAsset {
 	handle: string;
 	height: number;
@@ -34,3 +36,38 @@ export type TransformParams = {
 	blur?: number;
 	watermark?: Watermark;
 };
+
+export interface ImageProps extends Omit<HTMLImgAttributes, 'src' | 'srcset'> {
+	handle: string;
+	title?: string;
+	width: number;
+	height: number;
+	baseURI?: string;
+	media?: string | null;
+	/** @description determines how the images is scaled
+	 *  @default 'constrained'
+	 */
+	layout?: 'fullWidth' | 'constrained' | 'fixed';
+	// --- Styling and Presentation ---
+	fit?: Fit;
+	maxHeight?: number;
+	absolute?: boolean;
+	// --- Transforms ---
+	quality?: number;
+	rotate?: number;
+	sharpen?: number;
+	blur?: number;
+	withWebp?: boolean;
+	watermark?: Watermark;
+}
+
+export interface GraphImageProps extends Omit<ImageProps, 'handle' | 'style' | 'width' | 'height'> {
+	image: GraphAsset;
+	// --- Styling and Presentation ---
+	fit?: Fit;
+	style?: Partial<CSSStyleDeclaration>;
+	load?: Load;
+	// --- Image Enhancements and Effects ---
+	backgroundColor?: string | boolean;
+	blurryPlaceholder?: boolean;
+}
