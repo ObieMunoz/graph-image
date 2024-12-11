@@ -10,10 +10,10 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
-    "eslint": "catalog:",
-    "prettier": "catalog:",
-    "prettier-plugin-svelte": "catalog:",
+    "eslint": "^9.7.0",
+		"prettier": "^3.4.1",
+		"prettier-plugin-svelte": "^3.3.2",
     "turbo": "latest"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@8.15.9"
 }
