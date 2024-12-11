@@ -1,4 +1,8 @@
-{
+    "build": {
+      "dependsOn": ["^package", "^build"],
+      "outputs": [".svelte-kit/**", ".vercel/**", "dist/**"],
+      "env": ["HYGRAPH_TOKEN", "HYGRAPH_URL"]
+    },
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "package": {
