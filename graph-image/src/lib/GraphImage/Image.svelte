@@ -46,7 +46,7 @@
 		];
 	});
 
-	let style = $derived(styleObj.map((val) => val.join(':')).join(';') + rest.style);
+	let style = $derived(styleObj.map((val) => val.join(':')).join(';') + ';' + rest.style || '');
 
 	// handle sizes attribute with resonable default if not provided
 	let calculatedSizes = $derived.by(() => {
