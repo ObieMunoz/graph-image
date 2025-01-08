@@ -26,7 +26,7 @@
 	let styleObj = $derived.by(() => {
 		if (layout === 'constrained') {
 			return [
-				['object-fit', 'cover'],
+				['object-fit', 'contain'],
 				['aspect-ratio', `${width} / ${height}`],
 				['max-width', `${width}px`],
 				['max-height', `${maxHeight || height}px`],
