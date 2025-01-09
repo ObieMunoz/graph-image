@@ -1,5 +1,11 @@
 # graph-image
 
+## 1.0.1
+
+### Patch Changes
+
+- fed9b47: Fix bug with styles not applying correctly
+
 ## 1.0.0
 
 ### Major Changes
