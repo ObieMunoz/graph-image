@@ -26,7 +26,7 @@
 	let styleObj = $derived.by(() => {
 		if (layout === 'constrained') {
 			return [
-				['object-fit', 'cover'],
+				['object-fit', 'contain'],
 				['aspect-ratio', `${width} / ${height}`],
 				['max-width', `${width}px`],
 				['max-height', `${maxHeight || height}px`],
@@ -46,7 +46,7 @@
 		];
 	});
 
-	let style = $derived(styleObj.map((val) => val.join(':')).join(';') + rest.style);
+	let style = $derived(styleObj.map((val) => val.join(':')).join(';') + ';' + rest.style || '');
 
 	// handle sizes attribute with resonable default if not provided
 	let calculatedSizes = $derived.by(() => {
