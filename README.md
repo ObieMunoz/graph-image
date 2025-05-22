@@ -13,7 +13,7 @@ Advanced Lazy-Loading and Compression with Svelte/SvelteKit and Hygraph
 [Demo](https://graph-image.obiemunoz.com) • [Obie Munoz](https://www.obiemunoz.com/)
 
 # Graph Image Turborepo
-# DEPRECATED - Graph Image is no longer being updated/maintained as of 5/22/25.
+## DEPRECATED - Graph Image is no longer being updated/maintained as of 5/22/25.
 
 This Turborepo includes the [graph-image](https://github.com/ObieMunoz/graph-image/blob/main/graph-image/README.md) npmjs package and the [demo](https://github.com/ObieMunoz/graph-image/blob/main/demo/README.md) application.
 
